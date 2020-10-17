@@ -4,7 +4,6 @@ using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.Friends.Service.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FriendsOrganizer.Friends.Service
@@ -35,5 +34,19 @@ namespace FriendsOrganizer.Friends.Service
             return resultModel;
         }
 
+        public async Task<FriendDTO> GetAsync(int id)
+        {
+            var dbCall = await this._dbContext
+                .Friends
+                .AsNoTracking()
+                .FirstOrDefaultAsync(f => f.Id == id);
+
+            if (dbCall != null)
+            {
+                return this._mapper.Map<FriendDTO>(dbCall);
+            }
+
+            throw new KeyNotFoundException("Friend not found");
+        }
     }
 }

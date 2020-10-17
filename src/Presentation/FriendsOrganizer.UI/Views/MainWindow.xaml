@@ -16,55 +16,9 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <views:NavigationUserControl DataContext="{Binding NavigationViewModel}"/>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition ></RowDefinition>
-            </Grid.RowDefinitions>
-
-            <Label 
-                Content="First Name"
-                Margin="10,10,10,0"
-                />
-            <TextBox 
-                Grid.Row="1" 
-                Margin="10,0,10,10"
-                Text="{Binding SelectedFriend.FirstName, 
-                    Mode=TwoWay, 
-                    UpdateSourceTrigger=PropertyChanged}"
-                />
-
-            <Label 
-                Grid.Row="2" 
-                Content="Last Name"
-                Margin="10,0"
-                />
-            <TextBox 
-                Grid.Row="3" 
-                Margin="10,0,10,10"
-                Text="{Binding SelectedFriend.LastName, 
-                    Mode=TwoWay, 
-                    UpdateSourceTrigger=PropertyChanged}"
-                />
-
-            <Label 
-                Grid.Row="4" 
-                Content="Email"
-                Margin="10,0"
-                />
-            <TextBox 
-                Grid.Row="5" 
-                Margin="10,0,10,10"
-                Text="{Binding SelectedFriend.Email, 
-                    Mode=TwoWay, 
-                    UpdateSourceTrigger=PropertyChanged}"
-                />
-
-        </Grid>
+        <views:FriendDetailUserControl 
+            Grid.Column="1"
+            DataContext="{Binding FriendDetailViewModel}"/>
+        
     </Grid>
 </Window>

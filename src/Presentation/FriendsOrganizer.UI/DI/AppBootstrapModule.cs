@@ -14,7 +14,10 @@ namespace FriendsOrganizer.UI.DI
         {
             builder.RegisterType<MainWindowViewModel>().AsSelf();
             builder.RegisterType<NavigationViewModel>().AsSelf();
+            builder.RegisterType<FriendDetailViewModel>().AsSelf();
+
             builder.RegisterType<FriendService>().As<IFriendService>();
+
             builder.RegisterType<MainWindow>().AsSelf();
         }
     }
