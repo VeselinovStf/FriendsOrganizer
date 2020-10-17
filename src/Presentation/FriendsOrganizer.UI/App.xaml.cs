@@ -1,4 +1,5 @@
-﻿using FriendsOrganizer.Data;
+﻿using Autofac;
+using FriendsOrganizer.Data;
 using FriendsOrganizer.Friends.Service;
 using FriendsOrganizer.UI.ViewModels;
 using FriendsOrganizer.UI.Views;
@@ -13,10 +14,11 @@ namespace FriendsOrganizer.UI
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var mainWindow = new MainWindow(
-                new MainWindowViewModel(
-                    new FriendService(
-                        new FriendsOrganizerDbContext())));
+            var containerBuilder = new ContainerBuilder();
+            var configurationStartUp = new StartUp();
+            var container = configurationStartUp.OnConfiguration(containerBuilder);
+
+            var mainWindow = container.Resolve<MainWindow>();
 
             mainWindow.Show();
         }
