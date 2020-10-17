@@ -4,6 +4,7 @@ using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.Friends.Service.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FriendsOrganizer.Friends.Service
@@ -31,6 +32,20 @@ namespace FriendsOrganizer.Friends.Service
                 .Map<IList<FriendDTO>>(dbCall);
 
             return resultModel;
+        }
+
+        public async Task<IEnumerable<FrienLookupDTO>> GetAllFriendsLookupAsync()
+        {
+            var dbCall = await this._dbContext
+                .Friends
+                .AsNoTracking()
+                .Select(f => new FrienLookupDTO()
+                {
+                    Id = f.Id,
+                    DisplayProperty = f.FullName()
+                }).ToListAsync();
+
+            return dbCall;
         }
     }
 }
