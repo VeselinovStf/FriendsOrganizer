@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         private readonly IFriendService _friendService;
         private FriendModel _selectedFriend;
 
-        public MainViewModel(IFriendService friendService)
+        public MainWindowViewModel(IFriendService friendService)
         {
             this.Friends = new ObservableCollection<FriendModel>();
             this._friendService = friendService;

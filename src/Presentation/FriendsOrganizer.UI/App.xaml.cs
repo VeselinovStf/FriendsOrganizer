@@ -1,4 +1,7 @@
-﻿using FriendsOrganizer.UI.Views;
+﻿using FriendsOrganizer.Data;
+using FriendsOrganizer.Friends.Service;
+using FriendsOrganizer.UI.ViewModels;
+using FriendsOrganizer.UI.Views;
 using System.Windows;
 
 namespace FriendsOrganizer.UI
@@ -10,7 +13,11 @@ namespace FriendsOrganizer.UI
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var mainWindow = new MainWindow();
+            var mainWindow = new MainWindow(
+                new MainWindowViewModel(
+                    new FriendService(
+                        new FriendsOrganizerDbContext())));
+
             mainWindow.Show();
         }
     }
