@@ -1,17 +1,34 @@
-﻿using FriendsOrganizer.Data.Models;
+﻿using FriendsOrganizer.Data;
 using FriendsOrganizer.Friends.Service.Abstraction;
+using FriendsOrganizer.Friends.Service.DTOs;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FriendsOrganizer.Friends.Service
 {
     public class FriendService : IFriendService
     {
-        public IEnumerable<Friend> GetAll()
+        private readonly FriendsOrganizerDbContext _dbContext;
+
+        public FriendService(FriendsOrganizerDbContext dbContext)
         {
-            yield return new Friend() { FirstName = "John", LastName = "Dow", Email = "JohnD@mail.com" };
-            yield return new Friend() { FirstName = "Jayne", LastName = "Dow", Email = "JaybeD@mail.com" };
-            yield return new Friend() { FirstName = "Tom", LastName = "Cat", Email = "TomC@mail.com" };
-            yield return new Friend() { FirstName = "Jerry", LastName = "Mouce", Email = "JerryM@mail.com" };
+            this._dbContext = dbContext;
+        }
+
+        public IEnumerable<FriendDTO> GetAll()
+        {
+            var dbCall = this._dbContext
+                .Friends;
+
+            var resultModel = new List<FriendDTO>(dbCall.Select(f => new FriendDTO()
+            {
+                Email = f.Email,
+                FirstName = f.FirstName,
+                Id = f.Id,
+                LastName = f.LastName
+            }));
+
+            return resultModel;
         }
     }
 }

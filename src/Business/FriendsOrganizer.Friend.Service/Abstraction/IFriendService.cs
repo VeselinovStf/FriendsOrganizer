@@ -1,10 +1,10 @@
-﻿using FriendsOrganizer.Data.Models;
+﻿using FriendsOrganizer.Friends.Service.DTOs;
 using System.Collections.Generic;
 
 namespace FriendsOrganizer.Friends.Service.Abstraction
 {
     public interface IFriendService
     {
-        IEnumerable<Friend> GetAll();
+        IEnumerable<FriendDTO> GetAll();
     }
 }

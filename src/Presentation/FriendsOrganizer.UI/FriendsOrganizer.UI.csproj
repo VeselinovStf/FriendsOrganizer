@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Business\FriendsOrganizer.Friend.Service\FriendsOrganizer.Friends.Service.csproj" />
-    <ProjectReference Include="..\..\Data\FriendsOrganizer.Data.Models\FriendsOrganizer.Data.Models.csproj" />
-    <ProjectReference Include="..\..\Data\FriendsOrganizer.Data\FriendsOrganizer.Data.csproj" />
   </ItemGroup>
 
 </Project>
