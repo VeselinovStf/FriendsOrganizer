@@ -20,6 +20,10 @@ namespace FriendsOrganizer.UI
 
             var mainWindow = container.Resolve<MainWindow>();
 
+            //Db Seed
+            var dbContext = container.Resolve<FriendsOrganizerDbContext>();
+            dbContext.Seed();
+            
             mainWindow.Show();
         }
 

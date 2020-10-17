@@ -1,6 +1,5 @@
 ﻿using FriendsOrganizer.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace FriendsOrganizer.Data
@@ -18,6 +17,7 @@ namespace FriendsOrganizer.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            
         }
 
        
