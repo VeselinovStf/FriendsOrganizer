@@ -1,16 +1,25 @@
 ﻿using FriendsOrganizer.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace FriendsOrganizer.Data
 {
-    public class FriendsOrganizerDbContext
+    public class FriendsOrganizerDbContext : DbContext
     {
-        public ICollection<Friend> Friends { get; set; } = new List<Friend>()
+        public DbSet<Friend> Friends { get; set; }
+
+        public FriendsOrganizerDbContext(DbContextOptions options) : base(options)
         {
-             new Friend() { FirstName = "John", LastName = "Dow", Email = "JohnD@mail.com" },
-             new Friend() { FirstName = "Jayne", LastName = "Dow", Email = "JaybeD@mail.com" },
-             new Friend() { FirstName = "Tom", LastName = "Cat", Email = "TomC@mail.com" },
-             new Friend() { FirstName = "Jerry", LastName = "Mouce", Email = "JerryM@mail.com" }
-        };
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
+
+       
     }
 }

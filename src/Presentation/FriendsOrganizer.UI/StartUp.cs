@@ -8,6 +8,7 @@ namespace FriendsOrganizer.UI
         public IContainer OnConfiguration(ContainerBuilder builder)
         {
             builder.RegisterModule(new AppBootstrapModule());
+            builder.RegisterModule(new AppMapperModule());
 
             return builder.Build();
         }
