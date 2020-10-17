@@ -11,7 +11,7 @@ namespace FriendsOrganizer.UI.Mapper
         {
             CreateMap<FriendDTO, FriendModel>();
             CreateMap<Friend, FriendDTO>();
-          
+
         }
     }
 }

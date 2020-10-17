@@ -10,7 +10,7 @@ namespace FriendsOrganizer.UI.DI
     public class AppBootstrapModule : Module
     {
         protected override void Load(ContainerBuilder builder)
-        {          
+        {
             builder.RegisterType<MainWindowViewModel>().AsSelf();
             builder.RegisterType<FriendService>().As<IFriendService>();
             builder.RegisterType<MainWindow>().AsSelf();

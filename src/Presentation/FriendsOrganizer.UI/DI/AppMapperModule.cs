@@ -5,7 +5,7 @@ using FriendsOrganizer.UI.Mapper;
 namespace FriendsOrganizer.UI.DI
 {
     public class AppMapperModule : Module
-    {      
+    {
         protected override void Load(ContainerBuilder builder)
         {
             builder.Register(context => new MapperConfiguration(cfg =>

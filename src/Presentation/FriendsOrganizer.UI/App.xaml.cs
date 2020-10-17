@@ -1,7 +1,5 @@
 ﻿using Autofac;
 using FriendsOrganizer.Data;
-using FriendsOrganizer.Friends.Service;
-using FriendsOrganizer.UI.ViewModels;
 using FriendsOrganizer.UI.Views;
 using System.Windows;
 
@@ -23,7 +21,7 @@ namespace FriendsOrganizer.UI
             //Db Seed
             var dbContext = container.Resolve<FriendsOrganizerDbContext>();
             dbContext.Seed();
-            
+
             mainWindow.Show();
         }
 

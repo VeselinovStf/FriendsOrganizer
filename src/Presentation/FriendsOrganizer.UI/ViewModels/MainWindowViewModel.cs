@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using FriendsOrganizer.Friends.Service.Abstraction;
-using FriendsOrganizer.Friends.Service.DTOs;
 using FriendsOrganizer.UI.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
@@ -25,16 +25,15 @@ namespace FriendsOrganizer.UI.ViewModels
 
         public ObservableCollection<FriendModel> Friends { get; set; }
 
-        public void Load()
+        public async Task Load()
         {
-            var friendsDbServiceCall = this._friendService
-                .GetAll()
-                .ToList();
+            var friendsDbServiceCall = await this._friendService
+                .GetAllAsync();
 
             Friends.Clear();
 
             var friendDbServiceCallModel = this._mapper
-                .Map<IList<FriendModel>>(friendsDbServiceCall);
+                .Map<IList<FriendModel>>(friendsDbServiceCall.ToList());
 
             foreach (var friend in friendDbServiceCallModel)
             {
@@ -45,8 +44,8 @@ namespace FriendsOrganizer.UI.ViewModels
         public FriendModel SelectedFriend
         {
             get { return _selectedFriend; }
-            set 
-            { 
+            set
+            {
                 _selectedFriend = value;
                 OnPropertyChanged();
             }

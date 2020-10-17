@@ -2,7 +2,9 @@
 using FriendsOrganizer.Data;
 using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.Friends.Service.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FriendsOrganizer.Friends.Service
 {
@@ -19,14 +21,15 @@ namespace FriendsOrganizer.Friends.Service
             this._mapper = mapper;
         }
 
-        public IEnumerable<FriendDTO> GetAll()
+        public async Task<IEnumerable<FriendDTO>> GetAllAsync()
         {
-            var dbCall = this._dbContext
-                .Friends;
+            var dbCall = await this._dbContext
+                .Friends
+                .ToListAsync();
 
             var resultModel = this._mapper
                 .Map<IList<FriendDTO>>(dbCall);
-                
+
             return resultModel;
         }
     }

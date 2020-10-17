@@ -1,10 +1,11 @@
 ﻿using FriendsOrganizer.Friends.Service.DTOs;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FriendsOrganizer.Friends.Service.Abstraction
 {
     public interface IFriendService
     {
-        IEnumerable<FriendDTO> GetAll();
+        Task<IEnumerable<FriendDTO>> GetAllAsync();
     }
 }
