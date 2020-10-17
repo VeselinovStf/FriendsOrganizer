@@ -3,9 +3,53 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ADD9FBF4-F7D4-4C5C-8CEE-3A7B7B3704A3}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{804838AF-ED91-4409-AC11-21BB8C7591F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{9A33B20F-7E14-491A-9F7E-46CA4BC7F318}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{D0CF575C-69DE-449C-A2FA-26816B8651FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendsOrganizer.Data", "src\Data\FriendsOrganizer.Data\FriendsOrganizer.Data.csproj", "{45C06785-F545-48C8-9728-66F0C6CA5C83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendsOrganizer.Data.Models", "src\Data\FriendsOrganizer.Data.Models\FriendsOrganizer.Data.Models.csproj", "{FB507153-7928-4E2F-B41E-F18CACD320E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendsOrganizer.UI", "src\Presentation\FriendsOrganizer.UI\FriendsOrganizer.UI.csproj", "{5EF60F25-F057-47A6-B701-8CFF30444AC1}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45C06785-F545-48C8-9728-66F0C6CA5C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45C06785-F545-48C8-9728-66F0C6CA5C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45C06785-F545-48C8-9728-66F0C6CA5C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45C06785-F545-48C8-9728-66F0C6CA5C83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB507153-7928-4E2F-B41E-F18CACD320E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB507153-7928-4E2F-B41E-F18CACD320E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB507153-7928-4E2F-B41E-F18CACD320E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB507153-7928-4E2F-B41E-F18CACD320E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EF60F25-F057-47A6-B701-8CFF30444AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EF60F25-F057-47A6-B701-8CFF30444AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EF60F25-F057-47A6-B701-8CFF30444AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EF60F25-F057-47A6-B701-8CFF30444AC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A33B20F-7E14-491A-9F7E-46CA4BC7F318} = {804838AF-ED91-4409-AC11-21BB8C7591F8}
+		{D0CF575C-69DE-449C-A2FA-26816B8651FD} = {804838AF-ED91-4409-AC11-21BB8C7591F8}
+		{45C06785-F545-48C8-9728-66F0C6CA5C83} = {D0CF575C-69DE-449C-A2FA-26816B8651FD}
+		{FB507153-7928-4E2F-B41E-F18CACD320E8} = {D0CF575C-69DE-449C-A2FA-26816B8651FD}
+		{5EF60F25-F057-47A6-B701-8CFF30444AC1} = {9A33B20F-7E14-491A-9F7E-46CA4BC7F318}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3E61E455-C9AA-46D9-B64C-C905167C1813}
