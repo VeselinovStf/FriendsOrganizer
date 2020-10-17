@@ -23,7 +23,7 @@ namespace FriendsOrganizer.UI.Models
         public async Task LoadAsync()
         {
             var friendsLookupServiceCall = await this._friendService
-                .GetAllFriendsLookupAsync();
+                .GetAllAsync();
 
             Friends.Clear();
 

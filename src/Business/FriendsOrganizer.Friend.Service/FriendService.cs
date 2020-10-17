@@ -35,18 +35,5 @@ namespace FriendsOrganizer.Friends.Service
             return resultModel;
         }
 
-        public async Task<IEnumerable<FrienLookupDTO>> GetAllFriendsLookupAsync()
-        {
-            var dbCall = await this._dbContext
-                .Friends
-                .AsNoTracking()
-                .Select(f => new FrienLookupDTO()
-                {
-                    Id = f.Id,
-                    DisplayProperty = f.FullName()
-                }).ToListAsync();
-
-            return dbCall;
-        }
     }
 }

@@ -12,7 +12,9 @@ namespace FriendsOrganizer.UI.Mapper
             CreateMap<FriendDTO, FriendModel>();
             CreateMap<Friend, FriendDTO>();
 
-            CreateMap<FrienLookupDTO, LookupItem>();
+            CreateMap<FriendDTO, LookupItem>()
+                .ForMember(dto => dto.Id, item => item.MapFrom(i => i.Id))
+                .ForMember(dto => dto.DisplayProperty, item => item.MapFrom(i => i.FirstName + " " + i.LastName));
         }
     }
 }

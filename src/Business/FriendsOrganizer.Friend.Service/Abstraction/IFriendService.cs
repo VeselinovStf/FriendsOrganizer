@@ -7,7 +7,6 @@ namespace FriendsOrganizer.Friends.Service.Abstraction
     public interface IFriendService
     {
         Task<IEnumerable<FriendDTO>> GetAllAsync();
-
-        Task<IEnumerable<FrienLookupDTO>> GetAllFriendsLookupAsync();
+     
     }
 }
