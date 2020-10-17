@@ -1,18 +1,22 @@
-﻿using FriendsOrganizer.Data;
+﻿using AutoMapper;
+using FriendsOrganizer.Data;
 using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.Friends.Service.DTOs;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FriendsOrganizer.Friends.Service
 {
     public class FriendService : IFriendService
     {
         private readonly FriendsOrganizerDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public FriendService(FriendsOrganizerDbContext dbContext)
+        public FriendService(
+            FriendsOrganizerDbContext dbContext,
+            IMapper mapper)
         {
             this._dbContext = dbContext;
+            this._mapper = mapper;
         }
 
         public IEnumerable<FriendDTO> GetAll()
@@ -20,14 +24,9 @@ namespace FriendsOrganizer.Friends.Service
             var dbCall = this._dbContext
                 .Friends;
 
-            var resultModel = new List<FriendDTO>(dbCall.Select(f => new FriendDTO()
-            {
-                Email = f.Email,
-                FirstName = f.FirstName,
-                Id = f.Id,
-                LastName = f.LastName
-            }));
-
+            var resultModel = this._mapper
+                .Map<IList<FriendDTO>>(dbCall);
+                
             return resultModel;
         }
     }

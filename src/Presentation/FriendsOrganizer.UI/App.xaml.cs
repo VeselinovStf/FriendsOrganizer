@@ -22,5 +22,12 @@ namespace FriendsOrganizer.UI
 
             mainWindow.Show();
         }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show($"{e.Exception.Message} " +
+                $"---------- " +
+                $"{e.Exception.InnerException}", "ERROR OCCURES", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

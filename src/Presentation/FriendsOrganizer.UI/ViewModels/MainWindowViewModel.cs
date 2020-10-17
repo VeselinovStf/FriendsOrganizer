@@ -1,18 +1,26 @@
-﻿using FriendsOrganizer.Friends.Service.Abstraction;
+﻿using AutoMapper;
+using FriendsOrganizer.Friends.Service.Abstraction;
+using FriendsOrganizer.Friends.Service.DTOs;
 using FriendsOrganizer.UI.Models;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly IFriendService _friendService;
+        private readonly IMapper _mapper;
         private FriendModel _selectedFriend;
 
-        public MainWindowViewModel(IFriendService friendService)
+        public MainWindowViewModel(
+            IFriendService friendService,
+            IMapper mapper)
         {
             this.Friends = new ObservableCollection<FriendModel>();
             this._friendService = friendService;
+            this._mapper = mapper;
         }
 
         public ObservableCollection<FriendModel> Friends { get; set; }
@@ -20,18 +28,17 @@ namespace FriendsOrganizer.UI.ViewModels
         public void Load()
         {
             var friendsDbServiceCall = this._friendService
-                .GetAll();
+                .GetAll()
+                .ToList();
 
             Friends.Clear();
 
-            foreach (var friend in friendsDbServiceCall)
+            var friendDbServiceCallModel = this._mapper
+                .Map<IList<FriendModel>>(friendsDbServiceCall);
+
+            foreach (var friend in friendDbServiceCallModel)
             {
-                this.Friends.Add(new FriendModel()
-                {
-                    FirstName = friend.FirstName,
-                    LastName = friend.LastName,
-                    Email = friend.Email
-                });
+                this.Friends.Add(friend);
             }
         }
 
