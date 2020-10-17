@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using FriendsOrganizer.Friends.Service;
 using FriendsOrganizer.Friends.Service.Abstraction;
+using FriendsOrganizer.UI.Models;
 using FriendsOrganizer.UI.ViewModels;
 using FriendsOrganizer.UI.Views;
 
@@ -12,6 +13,7 @@ namespace FriendsOrganizer.UI.DI
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<MainWindowViewModel>().AsSelf();
+            builder.RegisterType<NavigationViewModel>().AsSelf();
             builder.RegisterType<FriendService>().As<IFriendService>();
             builder.RegisterType<MainWindow>().AsSelf();
         }

@@ -1,55 +1,20 @@
-﻿using AutoMapper;
-using FriendsOrganizer.Friends.Service.Abstraction;
-using FriendsOrganizer.UI.Models;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using FriendsOrganizer.UI.Models;
 using System.Threading.Tasks;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly IFriendService _friendService;
-        private readonly IMapper _mapper;
-        private FriendModel _selectedFriend;
+        public NavigationViewModel NavigationViewModel { get; }
 
-        public MainWindowViewModel(
-            IFriendService friendService,
-            IMapper mapper)
+        public MainWindowViewModel(NavigationViewModel navigationViewModel)
         {
-            this.Friends = new ObservableCollection<FriendModel>();
-            this._friendService = friendService;
-            this._mapper = mapper;
+            this.NavigationViewModel = navigationViewModel;
         }
 
-        public ObservableCollection<FriendModel> Friends { get; set; }
-
-        public async Task Load()
+        public async Task LoadAsync()
         {
-            var friendsDbServiceCall = await this._friendService
-                .GetAllAsync();
-
-            Friends.Clear();
-
-            var friendDbServiceCallModel = this._mapper
-                .Map<IList<FriendModel>>(friendsDbServiceCall.ToList());
-
-            foreach (var friend in friendDbServiceCallModel)
-            {
-                this.Friends.Add(friend);
-            }
+            await this.NavigationViewModel.LoadAsync();
         }
-
-        public FriendModel SelectedFriend
-        {
-            get { return _selectedFriend; }
-            set
-            {
-                _selectedFriend = value;
-                OnPropertyChanged();
-            }
-        }
-
     }
 }

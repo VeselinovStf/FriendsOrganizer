@@ -20,7 +20,7 @@ namespace FriendsOrganizer.UI.Views
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            await this._mainWindowViewModel.Load();
+            await this._mainWindowViewModel.LoadAsync();
         }
     }
 }
