@@ -22,6 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendsOrganizer.Data.Model
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendsOrganizer.UI", "src\Presentation\FriendsOrganizer.UI\FriendsOrganizer.UI.csproj", "{5EF60F25-F057-47A6-B701-8CFF30444AC1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{3D5240FF-6703-4DED-8C73-3310F1F72B45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendsOrganizer.Friends.Service", "src\Business\FriendsOrganizer.Friend.Service\FriendsOrganizer.Friends.Service.csproj", "{B944A5FA-76F6-4324-88AE-E04603367E25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +44,10 @@ Global
 		{5EF60F25-F057-47A6-B701-8CFF30444AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EF60F25-F057-47A6-B701-8CFF30444AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EF60F25-F057-47A6-B701-8CFF30444AC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B944A5FA-76F6-4324-88AE-E04603367E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B944A5FA-76F6-4324-88AE-E04603367E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B944A5FA-76F6-4324-88AE-E04603367E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B944A5FA-76F6-4324-88AE-E04603367E25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,8 @@ Global
 		{45C06785-F545-48C8-9728-66F0C6CA5C83} = {D0CF575C-69DE-449C-A2FA-26816B8651FD}
 		{FB507153-7928-4E2F-B41E-F18CACD320E8} = {D0CF575C-69DE-449C-A2FA-26816B8651FD}
 		{5EF60F25-F057-47A6-B701-8CFF30444AC1} = {9A33B20F-7E14-491A-9F7E-46CA4BC7F318}
+		{3D5240FF-6703-4DED-8C73-3310F1F72B45} = {804838AF-ED91-4409-AC11-21BB8C7591F8}
+		{B944A5FA-76F6-4324-88AE-E04603367E25} = {3D5240FF-6703-4DED-8C73-3310F1F72B45}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3E61E455-C9AA-46D9-B64C-C905167C1813}
