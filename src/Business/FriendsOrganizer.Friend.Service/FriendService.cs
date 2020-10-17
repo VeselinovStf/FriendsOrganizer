@@ -26,6 +26,7 @@ namespace FriendsOrganizer.Friends.Service
         {
             var dbCall = await this._dbContext
                 .Friends
+                .AsNoTracking()
                 .ToListAsync();
 
             var resultModel = this._mapper
