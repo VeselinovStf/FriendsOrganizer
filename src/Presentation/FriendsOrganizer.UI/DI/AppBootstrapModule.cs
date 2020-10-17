@@ -12,9 +12,7 @@ namespace FriendsOrganizer.UI.DI
     {
         protected override void Load(ContainerBuilder builder)
         {          
-            builder.Register<FriendsOrganizerDbContext>(c =>
-                new FriendsOrganizerDbContext(FriendsOrganizerDbContextFactory.OptionsBuilder().Options))
-                .InstancePerLifetimeScope();          
+              
 
             builder.RegisterType<MainWindowViewModel>().AsSelf();
             builder.RegisterType<FriendService>().As<IFriendService>();

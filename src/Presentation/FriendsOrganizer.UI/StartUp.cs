@@ -9,6 +9,7 @@ namespace FriendsOrganizer.UI
         {
             builder.RegisterModule(new AppBootstrapModule());
             builder.RegisterModule(new AppMapperModule());
+            builder.RegisterModule(new FriendsOrganizerDbContextModule());
 
             return builder.Build();
         }
