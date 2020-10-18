@@ -53,20 +53,17 @@ namespace FriendsOrganizer.UI.ModelsWrappers
             }
         }
 
-        protected override IEnumerable<string> ValidateProperty(string propertyName)
-        {
-            switch (propertyName)
-            {
-                case nameof(FirstName):
-                    if (string.IsNullOrWhiteSpace(FirstName) ||
-                        FirstName.Length < 4 || FirstName.Length > 20)
-                    {
-                        yield return "Ivalid First Name";
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+        //Example for custom validation
+        //protected override IEnumerable<string> ValidateProperty(string propertyName)
+        //{
+        //    switch (propertyName)
+        //    {
+        //        case nameof(FirstName):
+                   
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
     } 
 }

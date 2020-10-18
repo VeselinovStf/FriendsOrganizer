@@ -35,7 +35,7 @@ namespace FriendsOrganizer.UI.ViewModels
         private bool OnSaveCanExecute()
         {
             //TODO: Validation
-            return true;
+            return Friend!= null && !Friend.HasErrors;
         }
 
         private async void OnSaveExecute()
@@ -66,6 +66,12 @@ namespace FriendsOrganizer.UI.ViewModels
             var friend = this._mapper.Map<FriendModel>(friendServiceCall);
 
             Friend = new FriendModelWrapper(friend);
+
+            Friend.PropertyChanged += (s, e) =>
+            {
+                ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            };
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
 
         private FriendModelWrapper _friend;

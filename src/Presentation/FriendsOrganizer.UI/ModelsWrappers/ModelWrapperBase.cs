@@ -1,5 +1,6 @@
 ﻿using FriendsOrganizer.UI.Validations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
 namespace FriendsOrganizer.UI.ModelsWrappers
@@ -21,18 +22,37 @@ namespace FriendsOrganizer.UI.ModelsWrappers
         {
             typeof(T).GetProperty(propertyName).SetValue(Model, value);
             OnPropertyChanged();
-            ValidatePropertyInternal(propertyName);
+            ValidatePropertyInternal(propertyName, value);
         }
 
-        private void ValidatePropertyInternal(string propertyName)
+        private void ValidatePropertyInternal(string propertyName, object currentValue)
         {
             ClearError(propertyName);
 
-            var errors = ValidateProperty(propertyName);
+            ValidateDataAnnotation(propertyName, currentValue);
 
+            ValidateCutomErrors(propertyName);
+        }
+
+        private void ValidateCutomErrors(string propertyName)
+        {
+            var errors = ValidateProperty(propertyName);
             foreach (var error in errors)
             {
                 AddError(propertyName, error);
+            }
+        }
+
+        private void ValidateDataAnnotation(string propertyName, object currentValue)
+        {
+            var validationResults = new List<ValidationResult>();
+            var validationContext = new ValidationContext(Model) { MemberName = propertyName };
+
+            Validator.TryValidateProperty(currentValue,validationContext, validationResults);
+
+            foreach (var result in validationResults)
+            {
+                AddError(propertyName, result.ErrorMessage);
             }
         }
 
