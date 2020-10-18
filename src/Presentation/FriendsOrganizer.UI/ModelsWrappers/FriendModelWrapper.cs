@@ -1,4 +1,5 @@
 ﻿using FriendsOrganizer.UI.Models;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace FriendsOrganizer.UI.ModelsWrappers
@@ -24,15 +25,9 @@ namespace FriendsOrganizer.UI.ModelsWrappers
             set
             {
                 SetValue(value);
-                ValidateError();
             }
         }
     
-        private void ValidateError([CallerMemberName]string propertyName = null)
-        {
-            ClearError(propertyName);
-            AddError(propertyName, "aaaaaa");
-        }
 
         public string LastName
         {
@@ -56,6 +51,22 @@ namespace FriendsOrganizer.UI.ModelsWrappers
             {
                 SetValue(value);
             }
-        }   
+        }
+
+        protected override IEnumerable<string> ValidateProperty(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(FirstName):
+                    if (string.IsNullOrWhiteSpace(FirstName) ||
+                        FirstName.Length < 4 || FirstName.Length > 20)
+                    {
+                        yield return "Ivalid First Name";
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     } 
 }

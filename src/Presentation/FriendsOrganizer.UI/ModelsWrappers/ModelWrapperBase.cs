@@ -1,4 +1,5 @@
 ﻿using FriendsOrganizer.UI.Validations;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace FriendsOrganizer.UI.ModelsWrappers
@@ -20,8 +21,25 @@ namespace FriendsOrganizer.UI.ModelsWrappers
         {
             typeof(T).GetProperty(propertyName).SetValue(Model, value);
             OnPropertyChanged();
+            ValidatePropertyInternal(propertyName);
         }
 
+        private void ValidatePropertyInternal(string propertyName)
+        {
+            ClearError(propertyName);
+
+            var errors = ValidateProperty(propertyName);
+
+            foreach (var error in errors)
+            {
+                AddError(propertyName, error);
+            }
+        }
+
+        protected virtual IEnumerable<string> ValidateProperty(string propertyName)
+        {
+            return null;
+        }
     }
 
    
