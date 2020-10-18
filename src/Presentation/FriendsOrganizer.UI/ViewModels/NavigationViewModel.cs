@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using FriendsOrganizer.Friends.Service.Abstraction;
+﻿using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.ViewModels;
 using Prism.Events;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,16 +11,13 @@ namespace FriendsOrganizer.UI.Models
     public class NavigationViewModel : ViewModelBase
     {
         private readonly IFriendService _friendService;
-        private readonly IMapper _mapper;
         private readonly IEventAggregator _eventAggregator;
 
         public NavigationViewModel(
             IFriendService friendService,
-            IMapper mapper,
             IEventAggregator eventAggregator)
         {
             this._friendService = friendService;
-            this._mapper = mapper;
             this._eventAggregator = eventAggregator;
             this.Friends = new ObservableCollection<NavigationViewItemModel>();
 
@@ -45,11 +40,9 @@ namespace FriendsOrganizer.UI.Models
 
             Friends.Clear();
 
-            var friendsLookup = this._mapper.Map<List<NavigationViewItemModel>>(friendsLookupServiceCall);
-
-            foreach (var friend in friendsLookup)
+            foreach (var friend in friendsLookupServiceCall)
             {
-                Friends.Add(friend);
+                Friends.Add(new NavigationViewItemModel(friend.Id, friend.FullName() ));
             }
         }
         public ObservableCollection<NavigationViewItemModel> Friends { get; set; }

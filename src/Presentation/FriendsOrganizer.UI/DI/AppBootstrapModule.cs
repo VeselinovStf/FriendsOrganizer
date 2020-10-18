@@ -1,4 +1,7 @@
 ﻿using Autofac;
+using FriendsOrganizer.Data.Abstraction;
+using FriendsOrganizer.Data.Models;
+using FriendsOrganizer.Data.Repositories;
 using FriendsOrganizer.Friends.Service;
 using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.UI.Models;
@@ -22,6 +25,8 @@ namespace FriendsOrganizer.UI.DI
             builder.RegisterType<MainWindow>().AsSelf();
 
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+
+            builder.RegisterType<FriendRepository>().As<IAsyncRepository<Friend>>();
         }
     }
 }

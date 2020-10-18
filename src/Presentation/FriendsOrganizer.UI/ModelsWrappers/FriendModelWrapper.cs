@@ -1,12 +1,10 @@
-﻿using FriendsOrganizer.UI.Models;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using FriendsOrganizer.Data.Models;
 
 namespace FriendsOrganizer.UI.ModelsWrappers
 {
-    public class FriendModelWrapper : ModelWrapperBase<FriendModel>
+    public class FriendModelWrapper : ModelWrapperBase<Friend>
     {
-        public FriendModelWrapper(FriendModel model) : base(model)
+        public FriendModelWrapper(Friend model) : base(model)
         {
         }
 
@@ -52,18 +50,5 @@ namespace FriendsOrganizer.UI.ModelsWrappers
                 SetValue(value);
             }
         }
-
-        //Example for custom validation
-        //protected override IEnumerable<string> ValidateProperty(string propertyName)
-        //{
-        //    switch (propertyName)
-        //    {
-        //        case nameof(FirstName):
-                   
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
     } 
 }

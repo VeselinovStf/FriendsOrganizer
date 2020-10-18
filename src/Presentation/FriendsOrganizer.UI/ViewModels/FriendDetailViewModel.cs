@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using FriendsOrganizer.Friends.Service.Abstraction;
-using FriendsOrganizer.Friends.Service.DTOs;
+﻿using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.UI.Events;
-using FriendsOrganizer.UI.Models;
 using FriendsOrganizer.UI.ModelsWrappers;
 using Prism.Commands;
 using Prism.Events;
@@ -13,17 +10,14 @@ namespace FriendsOrganizer.UI.ViewModels
 {
     public class FriendDetailViewModel : ViewModelBase
     {
-        private readonly IFriendService _friendService;
-        private readonly IMapper _mapper;
+        private readonly IFriendService _friendService;      
         private readonly IEventAggregator _eventAggregator;
 
         public FriendDetailViewModel(
             IFriendService friendService,
-            IMapper mapper,
             IEventAggregator eventAggregator)
         {
             this._friendService = friendService;
-            this._mapper = mapper;
             this._eventAggregator = eventAggregator;
 
             this._eventAggregator.GetEvent<OpenFriendDetailsEvent>()
@@ -40,16 +34,14 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private async void OnSaveExecute()
         {
-            var updateModel = this._mapper.Map<FriendDTO>(this.Friend.Model);
-
             await this._friendService
-                 .UpdateFriendAsync(updateModel);
+                 .UpdateFriendAsync();
 
             this._eventAggregator.GetEvent<AfterFriendSaveDetailsEvent>()
                 .Publish(new AfterFriendSaveDetailsLookup()
                 {
-                    Id = updateModel.Id,
-                    DisplayProperty = updateModel.FirstName + " " + updateModel.LastName
+                    Id = Friend.Id,
+                    DisplayProperty = Friend.FirstName + " " + Friend.LastName
                 });
         }
 
@@ -63,9 +55,7 @@ namespace FriendsOrganizer.UI.ViewModels
             var friendServiceCall = await this._friendService
                 .GetAsync(friendId);
 
-            var friend = this._mapper.Map<FriendModel>(friendServiceCall);
-
-            Friend = new FriendModelWrapper(friend);
+            Friend = new FriendModelWrapper(friendServiceCall);
 
             Friend.PropertyChanged += (s, e) =>
             {

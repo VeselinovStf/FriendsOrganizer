@@ -1,72 +1,46 @@
-﻿using AutoMapper;
-using FriendsOrganizer.Data;
+﻿using FriendsOrganizer.Data.Abstraction;
 using FriendsOrganizer.Data.Models;
 using FriendsOrganizer.Friends.Service.Abstraction;
-using FriendsOrganizer.Friends.Service.DTOs;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FriendsOrganizer.Friends.Service
 {
     public class FriendService : IFriendService
     {
-        private readonly FriendsOrganizerDbContext _dbContext;
-        private readonly IMapper _mapper;
+        private readonly IAsyncRepository<Friend> _friendRepository;
 
         public FriendService(
-            FriendsOrganizerDbContext dbContext,
-            IMapper mapper)
+            IAsyncRepository<Friend> friendRepository
+            )
         {
-            this._dbContext = dbContext;
-            this._mapper = mapper;
+            this._friendRepository = friendRepository;
         }
 
-        public async Task<IEnumerable<FriendDTO>> GetAllAsync()
+        public async Task<IEnumerable<Friend>> GetAllAsync()
         {
-            var dbCall = await this._dbContext
-                .Friends
-                .AsNoTracking()
-                .ToListAsync();
+            var dbCall = await this._friendRepository
+                .GetAllAsync();
 
-            var resultModel = this._mapper
-                .Map<IList<FriendDTO>>(dbCall);
-
-            return resultModel;
+            return dbCall.ToList();
         }
 
-        public async Task<FriendDTO> GetAsync(int id)
+        public async Task<Friend> GetAsync(int id)
         {
-            var dbCall = await this._dbContext
-                .Friends
-                .AsNoTracking()
-                .FirstOrDefaultAsync(f => f.Id == id);
+            var dbCall = await this._friendRepository
+                .GetAsync(id);
 
-            if (dbCall != null)
-            {
-                return this._mapper.Map<FriendDTO>(dbCall);
-            }
-
-            throw new KeyNotFoundException("Friend not found");
-        }
-
-        public async Task UpdateFriendAsync(FriendDTO updatableFriend)
-        {
-
-            var friendToUpdate = await this._dbContext
-                .Friends
-                .FirstOrDefaultAsync(f => f.Id == updatableFriend.Id);
-
-            if (friendToUpdate == null)
+            if (dbCall == null)
             {
                 throw new KeyNotFoundException("Friend not found");
             }
+            return dbCall;           
+        }
 
-            friendToUpdate.FirstName = updatableFriend.FirstName;
-            friendToUpdate.LastName = updatableFriend.LastName;
-            friendToUpdate.Email = updatableFriend.Email;
-
-            await this._dbContext.SaveChangesAsync();
+        public async Task UpdateFriendAsync()
+        {
+            await this._friendRepository.SaveChangesAsync();
         }
     }
 }

@@ -27,7 +27,9 @@ namespace FriendsOrganizer.UI.DI
                 opt.UseSqlServer("Server=DESKTOP-UGHAA7O;Database=FriendsDb;Trusted_Connection=True;");
 
                 return new FriendsOrganizerDbContext(opt.Options);
-            }).AsImplementedInterfaces().InstancePerLifetimeScope().AsSelf();
+            }).AsImplementedInterfaces()
+            .InstancePerLifetimeScope()
+            .AsSelf();
         }
 
       
