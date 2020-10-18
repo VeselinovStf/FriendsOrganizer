@@ -20,9 +20,6 @@ namespace FriendsOrganizer.UI.ViewModels
             this._friendService = friendService;
             this._eventAggregator = eventAggregator;
 
-            this._eventAggregator.GetEvent<OpenFriendDetailsEvent>()
-                .Subscribe(OnSelectedFriendEventHandler);
-
             this.SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
         }
 
@@ -45,10 +42,7 @@ namespace FriendsOrganizer.UI.ViewModels
                 });
         }
 
-        private async void OnSelectedFriendEventHandler(int friendId)
-        {
-            await this.Load(friendId);
-        }
+
 
         public async Task Load(int friendId)
         {

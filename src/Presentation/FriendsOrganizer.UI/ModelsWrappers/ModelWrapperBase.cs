@@ -37,10 +37,15 @@ namespace FriendsOrganizer.UI.ModelsWrappers
         private void ValidateCutomErrors(string propertyName)
         {
             var errors = ValidateProperty(propertyName);
-            foreach (var error in errors)
+
+            if (errors != null)
             {
-                AddError(propertyName, error);
+                foreach (var error in errors)
+                {
+                    AddError(propertyName, error);
+                }
             }
+           
         }
 
         private void ValidateDataAnnotation(string propertyName, object currentValue)

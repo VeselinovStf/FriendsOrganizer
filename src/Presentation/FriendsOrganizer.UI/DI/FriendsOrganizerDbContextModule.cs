@@ -28,7 +28,6 @@ namespace FriendsOrganizer.UI.DI
 
                 return new FriendsOrganizerDbContext(opt.Options);
             }).AsImplementedInterfaces()
-            .InstancePerLifetimeScope()
             .AsSelf();
         }
 
