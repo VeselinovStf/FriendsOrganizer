@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace FriendsOrganizer.UI.ModelsWrappers
 {
@@ -33,7 +34,14 @@ namespace FriendsOrganizer.UI.ModelsWrappers
             {
                 this.Model.FirstName = value;
                 OnPropertyChanged();
+                ValidateError();
             }
+        }
+
+        private void ValidateError([CallerMemberName]string propertyName = null)
+        {
+            ClearError(propertyName);
+            AddError(propertyName, "aaaaaa");
         }
 
         public string LastName
