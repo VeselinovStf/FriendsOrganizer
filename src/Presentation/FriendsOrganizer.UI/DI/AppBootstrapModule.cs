@@ -4,6 +4,7 @@ using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.UI.Models;
 using FriendsOrganizer.UI.ViewModels;
 using FriendsOrganizer.UI.Views;
+using Prism.Events;
 
 namespace FriendsOrganizer.UI.DI
 {
@@ -19,6 +20,8 @@ namespace FriendsOrganizer.UI.DI
             builder.RegisterType<FriendService>().As<IFriendService>();
 
             builder.RegisterType<MainWindow>().AsSelf();
+
+            builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
         }
     }
 }
