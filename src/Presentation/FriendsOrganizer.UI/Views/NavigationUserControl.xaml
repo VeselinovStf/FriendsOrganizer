@@ -8,6 +8,7 @@
     <Grid>
         <ListView
             ItemsSource="{Binding Friends}"
+            SelectedItem="{Binding SelectedFriend}"
             DisplayMemberPath="DisplayProperty"/>
     </Grid>
 </UserControl>

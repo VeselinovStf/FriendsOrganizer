@@ -2,7 +2,7 @@
 
 namespace FriendsOrganizer.UI.Events
 {
-    public class OpenFriendsDetailsEvent : PubSubEvent<int>
+    public class OpenFriendDetailsEvent : PubSubEvent<int>
     {
     }
 }
