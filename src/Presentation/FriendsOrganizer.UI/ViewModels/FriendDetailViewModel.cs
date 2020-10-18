@@ -2,9 +2,11 @@
 using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.Models;
+using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
@@ -25,6 +27,19 @@ namespace FriendsOrganizer.UI.ViewModels
 
             this._eventAggregator.GetEvent<OpenFriendDetailsEvent>()
                 .Subscribe(OnSelectedFriendEventHandler);
+
+            this.SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+        }
+
+        private bool OnSaveCanExecute()
+        {
+            //TODO: Validation
+            return true;
+        }
+
+        private void OnSaveExecute()
+        {
+            throw new NotImplementedException();
         }
 
         private async void OnSelectedFriendEventHandler(int friendId)
@@ -51,6 +66,8 @@ namespace FriendsOrganizer.UI.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public ICommand SaveCommand { get; }
 
     }
 }
