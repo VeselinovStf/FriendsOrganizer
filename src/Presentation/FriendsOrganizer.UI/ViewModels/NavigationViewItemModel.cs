@@ -21,8 +21,8 @@
         public string DisplayProperty
         {
             get { return _displayProperty; }
-            set 
-            { 
+            set
+            {
                 _displayProperty = value;
                 OnPropertyChanged();
             }

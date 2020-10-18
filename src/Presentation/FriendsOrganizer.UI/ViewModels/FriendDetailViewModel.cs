@@ -5,7 +5,6 @@ using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.Models;
 using Prism.Commands;
 using Prism.Events;
-using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -71,8 +70,8 @@ namespace FriendsOrganizer.UI.ViewModels
         public FriendModel Friend
         {
             get { return _friend; }
-            set 
-            { 
+            set
+            {
                 _friend = value;
                 OnPropertyChanged();
             }

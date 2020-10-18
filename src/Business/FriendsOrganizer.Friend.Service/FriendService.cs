@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FriendsOrganizer.Data;
-using FriendsOrganizer.Data.Models;
 using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.Friends.Service.DTOs;
 using Microsoft.EntityFrameworkCore;
