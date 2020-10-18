@@ -1,26 +1,17 @@
 ﻿using FriendsOrganizer.UI.Models;
-using FriendsOrganizer.UI.ViewModels;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace FriendsOrganizer.UI.ModelsWrappers
 {
-    public class FriendModelWrapper : ViewModelBase, INotifyDataErrorInfo
+    public class FriendModelWrapper : ModelWrapperBase<FriendModel>
     {
-        public FriendModelWrapper(FriendModel model)
+        public FriendModelWrapper(FriendModel model) : base(model)
         {
-            Model = model;
         }
-
-        public FriendModel Model { get; set; }
 
         public int Id
         {
-            get { return Model.Id; }
+            get { return GetValue<int>(); }
            
         }
 
@@ -28,16 +19,15 @@ namespace FriendsOrganizer.UI.ModelsWrappers
         {
             get
             {
-                return this.Model.FirstName;
+                return GetValue<string>();
             }
             set
             {
-                this.Model.FirstName = value;
-                OnPropertyChanged();
+                SetValue(value);
                 ValidateError();
             }
         }
-
+    
         private void ValidateError([CallerMemberName]string propertyName = null)
         {
             ClearError(propertyName);
@@ -48,12 +38,11 @@ namespace FriendsOrganizer.UI.ModelsWrappers
         {
             get
             {
-                return this.Model.LastName;
+                return GetValue<string>();
             }
             set
             {
-                this.Model.LastName = value;
-                OnPropertyChanged();
+                SetValue(value);
             }
         }
 
@@ -61,54 +50,12 @@ namespace FriendsOrganizer.UI.ModelsWrappers
         {
             get
             {
-                return this.Model.Email;
+                return GetValue<string>();
             }
             set
             {
-                this.Model.Email = value;
-                OnPropertyChanged();
+                SetValue(value);
             }
-        }
-
-        private Dictionary<string, List<string>> _errorMessages =
-            new Dictionary<string, List<string>>();
-
-        public bool HasErrors => this._errorMessages.Any();
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-        public IEnumerable GetErrors(string propertyName)
-        {
-            return this._errorMessages.ContainsKey(propertyName) ?
-                this._errorMessages[propertyName] : null;
-        }
-
-        private void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-
-        private void AddError(string propertyName, string error)
-        {
-            if (!_errorMessages.ContainsKey(propertyName))
-            {
-                _errorMessages[propertyName] = new List<string>();
-            }
-
-            if (!_errorMessages[propertyName].Contains(error))
-            {
-                _errorMessages[propertyName].Add(error);
-                OnErrorsChanged(propertyName);
-            }
-        }
-
-        private void ClearError(string propertyName)
-        {
-            if (_errorMessages.ContainsKey(propertyName))
-            {
-                _errorMessages.Remove(propertyName);
-                OnErrorsChanged(propertyName);
-            }
-        }
-    }
+        }   
+    } 
 }
