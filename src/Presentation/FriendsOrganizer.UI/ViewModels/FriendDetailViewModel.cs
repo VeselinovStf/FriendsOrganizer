@@ -3,6 +3,7 @@ using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.Friends.Service.DTOs;
 using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.Models;
+using FriendsOrganizer.UI.ModelsWrappers;
 using Prism.Commands;
 using Prism.Events;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private async void OnSaveExecute()
         {
-            var updateModel = this._mapper.Map<FriendDTO>(this.Friend);
+            var updateModel = this._mapper.Map<FriendDTO>(this.Friend.Model);
 
             await this._friendService
                  .UpdateFriendAsync(updateModel);
@@ -62,12 +63,14 @@ namespace FriendsOrganizer.UI.ViewModels
             var friendServiceCall = await this._friendService
                 .GetAsync(friendId);
 
-            Friend = this._mapper.Map<FriendModel>(friendServiceCall);
+            var friend = this._mapper.Map<FriendModel>(friendServiceCall);
+
+            Friend = new FriendModelWrapper(friend);
         }
 
-        private FriendModel _friend;
+        private FriendModelWrapper _friend;
 
-        public FriendModel Friend
+        public FriendModelWrapper Friend
         {
             get { return _friend; }
             set
