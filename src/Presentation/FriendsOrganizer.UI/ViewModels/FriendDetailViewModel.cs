@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FriendsOrganizer.Friends.Service.Abstraction;
+using FriendsOrganizer.Friends.Service.DTOs;
 using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.Models;
 using Prism.Commands;
@@ -37,9 +38,12 @@ namespace FriendsOrganizer.UI.ViewModels
             return true;
         }
 
-        private void OnSaveExecute()
+        private async void OnSaveExecute()
         {
-            throw new NotImplementedException();
+            var updateModel = this._mapper.Map<FriendDTO>(this.Friend);
+
+            await this._friendService
+                 .UpdateFriendAsync(updateModel);
         }
 
         private async void OnSelectedFriendEventHandler(int friendId)

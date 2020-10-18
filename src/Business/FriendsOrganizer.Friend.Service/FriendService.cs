@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FriendsOrganizer.Data;
+using FriendsOrganizer.Data.Models;
 using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.Friends.Service.DTOs;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,16 @@ namespace FriendsOrganizer.Friends.Service
             }
 
             throw new KeyNotFoundException("Friend not found");
+        }
+
+        public async Task UpdateFriendAsync(FriendDTO updatableFriend)
+        {
+            var mappedUpdatableFriend = this._mapper.Map<Friend>(updatableFriend);
+
+            this._dbContext.Friends.Attach(mappedUpdatableFriend);
+            this._dbContext.Entry(mappedUpdatableFriend).State = EntityState.Modified;
+
+            await this._dbContext.SaveChangesAsync();
         }
     }
 }

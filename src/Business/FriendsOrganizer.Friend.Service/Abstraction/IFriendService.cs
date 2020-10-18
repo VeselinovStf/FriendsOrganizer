@@ -9,6 +9,8 @@ namespace FriendsOrganizer.Friends.Service.Abstraction
         Task<IEnumerable<FriendDTO>> GetAllAsync();
 
         Task<FriendDTO> GetAsync(int id);
+
+        Task UpdateFriendAsync(FriendDTO updatableFriend);
      
     }
 }

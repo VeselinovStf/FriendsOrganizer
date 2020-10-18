@@ -10,7 +10,9 @@ namespace FriendsOrganizer.UI.Mapper
         public AppAutoMapperProfile()
         {
             CreateMap<FriendDTO, FriendModel>();
+            CreateMap<FriendModel, FriendDTO>();
             CreateMap<Friend, FriendDTO>();
+            CreateMap<FriendDTO, Friend>();
 
             CreateMap<FriendDTO, LookupItem>()
                 .ForMember(dto => dto.Id, item => item.MapFrom(i => i.Id))
