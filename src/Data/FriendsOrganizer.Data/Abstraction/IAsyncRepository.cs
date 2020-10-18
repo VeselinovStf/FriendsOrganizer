@@ -10,5 +10,7 @@ namespace FriendsOrganizer.Data.Abstraction
         Task<T> GetAsync(int id);
 
         Task SaveChangesAsync();
+
+        bool HasChanges();
     }
 }

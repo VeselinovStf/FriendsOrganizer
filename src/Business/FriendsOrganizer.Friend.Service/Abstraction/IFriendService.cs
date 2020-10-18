@@ -12,6 +12,6 @@ namespace FriendsOrganizer.Friends.Service.Abstraction
         Task<Friend> GetAsync(int id);
 
         Task UpdateFriendAsync();
-
+        bool HasChanges();
     }
 }

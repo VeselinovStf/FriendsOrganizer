@@ -38,6 +38,11 @@ namespace FriendsOrganizer.Friends.Service
             return dbCall;           
         }
 
+        public bool HasChanges()
+        {
+            return this._friendRepository.HasChanges();
+        }
+
         public async Task UpdateFriendAsync()
         {
             await this._friendRepository.SaveChangesAsync();

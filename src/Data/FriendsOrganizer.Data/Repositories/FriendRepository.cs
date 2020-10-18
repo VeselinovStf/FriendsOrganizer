@@ -29,6 +29,11 @@ namespace FriendsOrganizer.Data.Repositories
                 .FirstOrDefaultAsync(f => f.Id == id);
         }
 
+        public bool HasChanges()
+        {
+            return this._dbContext.ChangeTracker.HasChanges();
+        }
+
         public async Task SaveChangesAsync()
         {
             await this._dbContext.SaveChangesAsync();

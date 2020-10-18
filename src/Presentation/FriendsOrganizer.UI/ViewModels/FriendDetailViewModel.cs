@@ -25,14 +25,15 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private bool OnSaveCanExecute()
         {
-            //TODO: Validation
-            return Friend!= null && !Friend.HasErrors;
+            return Friend!= null && !Friend.HasErrors && HasChange;
         }
 
         private async void OnSaveExecute()
         {
             await this._friendService
                  .UpdateFriendAsync();
+
+            HasChange = this._friendService.HasChanges();
 
             this._eventAggregator.GetEvent<AfterFriendSaveDetailsEvent>()
                 .Publish(new AfterFriendSaveDetailsLookup()
@@ -53,10 +54,36 @@ namespace FriendsOrganizer.UI.ViewModels
 
             Friend.PropertyChanged += (s, e) =>
             {
-                ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                if (!HasChange)
+                {
+                    HasChange = this._friendService.HasChanges();
+                }
+                if (e.PropertyName == nameof(Friend.HasErrors))
+                {
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+              
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
+
+        private bool _hasChanges;
+
+        public bool HasChange
+        {
+            get { return _hasChanges; }
+            set 
+            {
+                if (_hasChanges != value)
+                {
+                    _hasChanges = value;
+                    OnPropertyChanged();
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+               
+            }
+        }
+
 
         private FriendModelWrapper _friend;
 
