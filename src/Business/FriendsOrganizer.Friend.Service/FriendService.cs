@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FriendsOrganizer.Data;
+using FriendsOrganizer.Data.Models;
 using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.Friends.Service.DTOs;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +52,7 @@ namespace FriendsOrganizer.Friends.Service
 
         public async Task UpdateFriendAsync(FriendDTO updatableFriend)
         {
+
             var friendToUpdate = await this._dbContext
                 .Friends
                 .FirstOrDefaultAsync(f => f.Id == updatableFriend.Id);

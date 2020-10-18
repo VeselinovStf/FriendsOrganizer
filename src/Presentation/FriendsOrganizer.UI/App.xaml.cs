@@ -29,7 +29,8 @@ namespace FriendsOrganizer.UI
         {
             MessageBox.Show($"{e.Exception.Message} " +
                 $"---------- " +
-                $"{e.Exception.InnerException}", "ERROR OCCURES", MessageBoxButton.OK, MessageBoxImage.Error);
+                $"{e.Exception.InnerException}", "ERROR OCCURED", MessageBoxButton.OK, MessageBoxImage.Error);
+            e.Handled = true;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace FriendsOrganizer.Data
     {
         public DbSet<Friend> Friends { get; set; }
 
-        public FriendsOrganizerDbContext(DbContextOptions options) : base(options)
+        public FriendsOrganizerDbContext(DbContextOptions<FriendsOrganizerDbContext> options) : base(options)
         {
 
         }

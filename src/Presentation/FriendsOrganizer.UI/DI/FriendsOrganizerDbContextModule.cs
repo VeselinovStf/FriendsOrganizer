@@ -1,25 +1,36 @@
 ﻿using Autofac;
 using FriendsOrganizer.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace FriendsOrganizer.UI.DI
 {
     public class FriendsOrganizerDbContextModule : Module
     {
-        public DbContextOptionsBuilder<FriendsOrganizerDbContext> OptionsBuilder()
+        public class FriendsOrganizerDbContextFactory : IDesignTimeDbContextFactory<FriendsOrganizerDbContext>
         {
-            var optionsBuilder = new DbContextOptionsBuilder<FriendsOrganizerDbContext>();
-            optionsBuilder.UseSqlServer("Server=DESKTOP-UGHAA7O;Database=FriendsDb;Trusted_Connection=True;");
+            public FriendsOrganizerDbContext CreateDbContext(string[] args)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<FriendsOrganizerDbContext>();
+                optionsBuilder.UseSqlServer("Server=DESKTOP-UGHAA7O;Database=FriendsDb;Trusted_Connection=True;");
 
-            return optionsBuilder;
-        }
+                return new FriendsOrganizerDbContext(optionsBuilder.Options);
+            }       
+        }   
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register<FriendsOrganizerDbContext>(c =>
-              new FriendsOrganizerDbContext(OptionsBuilder().Options))
-              .InstancePerLifetimeScope();
+
+            builder.Register(c =>
+            {
+                var opt = new DbContextOptionsBuilder<FriendsOrganizerDbContext>();
+                opt.UseSqlServer("Server=DESKTOP-UGHAA7O;Database=FriendsDb;Trusted_Connection=True;");
+
+                return new FriendsOrganizerDbContext(opt.Options);
+            }).AsImplementedInterfaces().InstancePerLifetimeScope().AsSelf();
         }
+
+      
     }
 
 }
