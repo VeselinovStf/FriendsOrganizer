@@ -44,6 +44,13 @@ namespace FriendsOrganizer.UI.ViewModels
 
             await this._friendService
                  .UpdateFriendAsync(updateModel);
+
+            this._eventAggregator.GetEvent<AfterFriendSaveDetailsEvent>()
+                .Publish(new AfterFriendSaveDetailsLookup()
+                {
+                    Id = updateModel.Id,
+                    DisplayProperty = updateModel.FirstName + " " + updateModel.LastName
+                });
         }
 
         private async void OnSelectedFriendEventHandler(int friendId)

@@ -52,10 +52,18 @@ namespace FriendsOrganizer.Friends.Service
 
         public async Task UpdateFriendAsync(FriendDTO updatableFriend)
         {
-            var mappedUpdatableFriend = this._mapper.Map<Friend>(updatableFriend);
+            var friendToUpdate = await this._dbContext
+                .Friends
+                .FirstOrDefaultAsync(f => f.Id == updatableFriend.Id);
 
-            this._dbContext.Friends.Attach(mappedUpdatableFriend);
-            this._dbContext.Entry(mappedUpdatableFriend).State = EntityState.Modified;
+            if (friendToUpdate == null)
+            {
+                throw new KeyNotFoundException("Friend not found");
+            }
+
+            friendToUpdate.FirstName = updatableFriend.FirstName;
+            friendToUpdate.LastName = updatableFriend.LastName;
+            friendToUpdate.Email = updatableFriend.Email;
 
             await this._dbContext.SaveChangesAsync();
         }

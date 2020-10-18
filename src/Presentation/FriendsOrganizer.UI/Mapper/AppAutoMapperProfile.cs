@@ -2,6 +2,7 @@
 using FriendsOrganizer.Data.Models;
 using FriendsOrganizer.Friends.Service.DTOs;
 using FriendsOrganizer.UI.Models;
+using FriendsOrganizer.UI.ViewModels;
 
 namespace FriendsOrganizer.UI.Mapper
 {
@@ -14,9 +15,9 @@ namespace FriendsOrganizer.UI.Mapper
             CreateMap<Friend, FriendDTO>();
             CreateMap<FriendDTO, Friend>();
 
-            CreateMap<FriendDTO, LookupItem>()
-                .ForMember(dto => dto.Id, item => item.MapFrom(i => i.Id))
-                .ForMember(dto => dto.DisplayProperty, item => item.MapFrom(i => i.FirstName + " " + i.LastName));
+            CreateMap<FriendDTO, NavigationViewItemModel>()
+                .ForCtorParam("id", opt => opt.MapFrom(s => s.Id))
+                .ForCtorParam("displayProperty", opt => opt.MapFrom(s => s.FirstName + " " + s.LastName));
         }
     }
 }
