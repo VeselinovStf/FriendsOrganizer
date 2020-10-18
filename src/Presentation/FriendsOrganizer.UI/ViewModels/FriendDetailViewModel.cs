@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using FriendsOrganizer.Friends.Service.Abstraction;
+using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.Models;
+using Prism.Events;
+using System;
 using System.Threading.Tasks;
 
 namespace FriendsOrganizer.UI.ViewModels
@@ -9,13 +12,24 @@ namespace FriendsOrganizer.UI.ViewModels
     {
         private readonly IFriendService _friendService;
         private readonly IMapper _mapper;
+        private readonly IEventAggregator _eventAggregator;
 
         public FriendDetailViewModel(
             IFriendService friendService,
-            IMapper mapper)
+            IMapper mapper,
+            IEventAggregator eventAggregator)
         {
             this._friendService = friendService;
             this._mapper = mapper;
+            this._eventAggregator = eventAggregator;
+
+            this._eventAggregator.GetEvent<OpenFriendDetailsEvent>()
+                .Subscribe(OnSelectedFriendEventHandler);
+        }
+
+        private async void OnSelectedFriendEventHandler(int friendId)
+        {
+            await this.Load(friendId);
         }
 
         public async Task Load(int friendId)
