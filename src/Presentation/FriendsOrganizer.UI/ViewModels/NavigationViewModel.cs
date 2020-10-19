@@ -42,27 +42,10 @@ namespace FriendsOrganizer.UI.Models
 
             foreach (var friend in friendsLookupServiceCall)
             {
-                Friends.Add(new NavigationViewItemModel(friend.Id, friend.FullName() ));
+                Friends.Add(new NavigationViewItemModel(friend.Id, friend.FullName(), this._eventAggregator ));
             }
         }
         public ObservableCollection<NavigationViewItemModel> Friends { get; set; }
-
-        private NavigationViewItemModel _selectedFriend;
-
-        public NavigationViewItemModel SelectedFriend
-        {
-            get { return _selectedFriend; }
-            set
-            {
-                _selectedFriend = value;
-                OnPropertyChanged();
-                if (_selectedFriend != null)
-                {
-                    this._eventAggregator.GetEvent<OpenFriendDetailsEvent>()
-                        .Publish(this._selectedFriend.Id);
-                }
-            }
-        }
 
     }
 }
