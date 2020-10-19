@@ -5,6 +5,7 @@ using FriendsOrganizer.Data.Repositories;
 using FriendsOrganizer.Friends.Service;
 using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.UI.Models;
+using FriendsOrganizer.UI.UIServices;
 using FriendsOrganizer.UI.ViewModels;
 using FriendsOrganizer.UI.Views;
 using Prism.Events;
@@ -21,6 +22,7 @@ namespace FriendsOrganizer.UI.DI
             builder.RegisterType<FriendDetailViewModel>().AsSelf();
 
             builder.RegisterType<FriendService>().As<IFriendService>();
+            builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
 
             builder.RegisterType<MainWindow>().AsSelf();
 
