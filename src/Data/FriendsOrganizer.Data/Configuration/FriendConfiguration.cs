@@ -26,6 +26,10 @@ namespace FriendsOrganizer.Data.Configuration
                 .HasMaxLength(50);
 
             builder.HasOne(f => f.ProgrammingLanguage);
+
+            builder.HasMany(f => f.PhoneNumbers)
+                .WithOne(ffn => ffn.Friend)
+                .HasForeignKey(ffn => ffn.FriendId);
                  
         }
     }

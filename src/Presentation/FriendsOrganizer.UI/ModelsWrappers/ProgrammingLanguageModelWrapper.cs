@@ -2,6 +2,7 @@
 
 namespace FriendsOrganizer.UI.ModelsWrappers
 {
+
     public class ProgrammingLanguageModelWrapper : ModelWrapperBase<ProgrammingLanguage>
     {
         public ProgrammingLanguageModelWrapper(ProgrammingLanguage model) : base(model)

@@ -89,6 +89,8 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private async void LoadProgrammyngLanguages()
         {
+            ProgrammingLanguages.Clear();
+          
             var languages = await this._programmingLanguagesService
                 .GetAllAsync();
 
