@@ -27,6 +27,9 @@ namespace FriendsOrganizer.UI.ViewModels
         private async void OnDeleteExecute()
         {
             await this._friendService.RemoveAsync(Friend.Model);
+
+            this._eventAggregator.GetEvent<AfterFriendDeleteEvent>()
+                .Publish(Friend.Model.Id);
         }
 
         private bool OnSaveCanExecute()

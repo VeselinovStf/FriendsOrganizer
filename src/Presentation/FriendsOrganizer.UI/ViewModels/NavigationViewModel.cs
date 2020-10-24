@@ -2,6 +2,7 @@
 using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.ViewModels;
 using Prism.Events;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,20 @@ namespace FriendsOrganizer.UI.Models
 
             this._eventAggregator.GetEvent<AfterFriendSaveDetailsEvent>()
                 .Subscribe(AfterSaveFriendEventHandler);
+
+            this._eventAggregator.GetEvent<AfterFriendDeleteEvent>()
+                .Subscribe(AfterFriendDeleteHandler);
+        }
+
+        private void AfterFriendDeleteHandler(int friendId)
+        {
+            var friend = this.Friends
+                .FirstOrDefault(f => f.Id == friendId);
+
+            if (friend != null)
+            {
+                Friends.Remove(friend);
+            }
         }
 
         private void AfterSaveFriendEventHandler(AfterFriendSaveDetailsLookup savedFriend)
