@@ -98,6 +98,8 @@
                     <DataGridTextColumn 
                         Header="Phone Numers" Width="*"
                         Binding="{Binding PhoneNumber, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"
+                        ElementStyle="{StaticResource DataGridColumnStyle}"
+                        EditingElementStyle="{StaticResource DataGridEditingColumnStyle}"                
                         />
                 </DataGrid.Columns>
             </DataGrid>
