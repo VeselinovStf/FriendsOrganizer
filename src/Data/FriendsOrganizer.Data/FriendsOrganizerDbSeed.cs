@@ -37,6 +37,14 @@ namespace FriendsOrganizer.Data
                 dbContext.SaveChangesAsync();
             }
 
+            if (!dbContext.FriendsPhonesNumbers.Any())
+            {
+                var newPhoneNumber = new FriendPhoneNumber() { PhoneNumber = "+35988765342", FriendId = dbContext.Friends.FirstOrDefault().Id };
+
+                dbContext.FriendsPhonesNumbers.AddAsync(newPhoneNumber);
+                dbContext.SaveChangesAsync();
+            }
+
         }
     }
 }
