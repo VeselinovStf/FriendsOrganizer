@@ -15,6 +15,11 @@ namespace FriendsOrganizer.Data.Repositories
             this._dbContext = dbContext;
         }
 
+        public async Task AddAsync(Friend newFriend)
+        {
+            await this._dbContext.AddAsync(newFriend);
+        }
+
         public async Task<IEnumerable<Friend>> GetAllAsync()
         {
             return await this._dbContext

@@ -11,12 +11,32 @@
         Width="600"
         FontSize="20">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition 
+                Height="Auto"></RowDefinition>
+            <RowDefinition 
+                Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition 
+                Width="200"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <views:NavigationUserControl DataContext="{Binding NavigationViewModel}"/>
+        <Menu 
+            Grid.ColumnSpan="2"
+            FontSize="20"
+            >
+            <MenuItem  Header="Create">
+                <MenuItem  Header="New Friend"
+                Command="{Binding CreateNewFriendCommmand}"/>
+            </MenuItem>
+                
+        </Menu>
+        <views:NavigationUserControl 
+            Grid.Row="1"
+            DataContext="{Binding NavigationViewModel}"/>
         <views:FriendDetailUserControl 
+            Grid.Row="1"
             Grid.Column="1"
             DataContext="{Binding FriendDetailViewModel}"/>
         

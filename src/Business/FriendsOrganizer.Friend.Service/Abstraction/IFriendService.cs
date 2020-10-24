@@ -1,5 +1,4 @@
 ﻿using FriendsOrganizer.Data.Models;
-using FriendsOrganizer.Friends.Service.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,5 +12,6 @@ namespace FriendsOrganizer.Friends.Service.Abstraction
 
         Task UpdateFriendAsync();
         bool HasChanges();
+        Task<Friend> AddNewAsync();
     }
 }

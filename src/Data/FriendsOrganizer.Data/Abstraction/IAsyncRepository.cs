@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FriendsOrganizer.Data.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FriendsOrganizer.Data.Abstraction
@@ -12,5 +13,6 @@ namespace FriendsOrganizer.Data.Abstraction
         Task SaveChangesAsync();
 
         bool HasChanges();
+        Task AddAsync(Friend newFriend);
     }
 }

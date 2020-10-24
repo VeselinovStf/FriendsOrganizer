@@ -45,13 +45,19 @@ namespace FriendsOrganizer.UI.ViewModels
 
 
 
-        public async Task Load(int friendId)
+        public async Task LoadAsync(int friendId)
         {
             var friendServiceCall = await this._friendService
                 .GetAsync(friendId);
 
             Friend = new FriendModelWrapper(friendServiceCall);
 
+            CheckChangeHandler(Friend);
+           
+        }
+
+        private void CheckChangeHandler(FriendModelWrapper friend)
+        {
             Friend.PropertyChanged += (s, e) =>
             {
                 if (!HasChange)
@@ -62,9 +68,19 @@ namespace FriendsOrganizer.UI.ViewModels
                 {
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
-              
+
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+        }
+
+        public async Task LoadAddableAsync()
+        {
+            var friendServiceCall = await this._friendService
+                .AddNewAsync();
+
+            Friend = new FriendModelWrapper(friendServiceCall);
+
+            CheckChangeHandler(Friend);
         }
 
         private bool _hasChanges;
@@ -99,5 +115,6 @@ namespace FriendsOrganizer.UI.ViewModels
 
         public ICommand SaveCommand { get; }
 
+        
     }
 }

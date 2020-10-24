@@ -18,6 +18,15 @@ namespace FriendsOrganizer.Friends.Service
             this._friendRepository = friendRepository;
         }
 
+        public async Task<Friend> AddNewAsync()
+        {
+            var newFriend = new Friend();
+
+            await this._friendRepository.AddAsync(newFriend);
+
+            return newFriend;
+        }
+
         public async Task<IEnumerable<Friend>> GetAllAsync()
         {
             var dbCall = await this._friendRepository

@@ -4,6 +4,7 @@ using Prism.Events;
 using System;
 using System.Threading.Tasks;
 using FriendsOrganizer.UI.UIServices;
+using Prism.Commands;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
@@ -12,6 +13,7 @@ namespace FriendsOrganizer.UI.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
 
+        public DelegateCommand CreateNewFriendCommmand { get; }
         public Func<FriendDetailViewModel> _friendDetailViewModelCreator { get; }
 
         public NavigationViewModel NavigationViewModel { get; }
@@ -29,8 +31,11 @@ namespace FriendsOrganizer.UI.ViewModels
 
             this._eventAggregator.GetEvent<OpenFriendDetailsEvent>()
                .Subscribe(OnSelectedFriendEventHandler);
+
+            CreateNewFriendCommmand = new DelegateCommand(OnCreateNewFriendExecute);
         }
 
+     
         private FriendDetailViewModel _friendDetailViewModel;
 
         public FriendDetailViewModel FriendDetailViewModel
@@ -46,6 +51,7 @@ namespace FriendsOrganizer.UI.ViewModels
             }
         }
 
+        
 
         public async Task LoadAsync()
         {
@@ -53,6 +59,15 @@ namespace FriendsOrganizer.UI.ViewModels
         }
 
         private async void OnSelectedFriendEventHandler(int friendId)
+        {
+            MessageUserIfFriendIsSelected();
+           
+            FriendDetailViewModel = this._friendDetailViewModelCreator();
+
+            await this.FriendDetailViewModel.LoadAsync(friendId);
+        }
+
+        private void MessageUserIfFriendIsSelected()
         {
             if (FriendDetailViewModel != null && FriendDetailViewModel.HasChange)
             {
@@ -63,10 +78,16 @@ namespace FriendsOrganizer.UI.ViewModels
                     return;
                 }
             }
+        }
+
+        private async void OnCreateNewFriendExecute()
+        {
+            MessageUserIfFriendIsSelected();
 
             FriendDetailViewModel = this._friendDetailViewModelCreator();
 
-            await this.FriendDetailViewModel.Load(friendId);
+            await this.FriendDetailViewModel.LoadAddableAsync();
         }
+
     }
 }
