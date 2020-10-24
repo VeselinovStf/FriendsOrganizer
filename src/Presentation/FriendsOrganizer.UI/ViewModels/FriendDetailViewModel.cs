@@ -1,4 +1,5 @@
-﻿using FriendsOrganizer.Friends.Service.Abstraction;
+﻿using FriendsOrganizer.Data.Models;
+using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.ProgrammingLanguages.Service.Abstraction;
 using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.ModelsWrappers;
@@ -6,7 +7,10 @@ using FriendsOrganizer.UI.UIServices;
 using Prism.Commands;
 using Prism.Events;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -19,6 +23,7 @@ namespace FriendsOrganizer.UI.ViewModels
         private readonly IMessageDialogService _messageDialogService;
         private readonly IProgrammingLanguagesService _programmingLanguagesService;
         public ObservableCollection<ProgrammingLanguageModelWrapper> ProgrammingLanguages { get; set; }
+        public ObservableCollection<FriendPhoneModelWrapper> PhoneNumbers { get; set; }
 
         public FriendDetailViewModel(
             IFriendService friendService,
@@ -35,6 +40,25 @@ namespace FriendsOrganizer.UI.ViewModels
             this.DeleteCommand = new DelegateCommand(OnDeleteExecute);
 
             this.ProgrammingLanguages = new ObservableCollection<ProgrammingLanguageModelWrapper>();
+            this.PhoneNumbers = new ObservableCollection<FriendPhoneModelWrapper>();
+
+            this.SavePhoneNumberCommand = new DelegateCommand(OnSavePhoneNumberExecute);
+            this.DeletePhoneNumberCommand = new DelegateCommand(OnDeletePhoneNumberExecute, OnDeletePhoneNumberCanExecute);
+        }
+
+        private void OnDeletePhoneNumberExecute()
+        {
+            //throw new NotImplementedException();
+        }
+
+        private bool OnDeletePhoneNumberCanExecute()
+        {
+            return this.SelectedPhoneNumber != null;
+        }
+
+        private void OnSavePhoneNumberExecute()
+        {
+            //throw new NotImplementedException();
         }
 
         private async void OnDeleteExecute()
@@ -54,7 +78,10 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private bool OnSaveCanExecute()
         {
-            return Friend!= null && !Friend.HasErrors && HasChange;
+            return Friend!= null && 
+                PhoneNumbers.All(p => !p.HasErrors) &&
+                !Friend.HasErrors && 
+                HasChange;
         }
 
         private async void OnSaveExecute()
@@ -83,8 +110,42 @@ namespace FriendsOrganizer.UI.ViewModels
 
             CheckChangeHandler(Friend);
 
+            InitializePhoneNumbers(Friend.PhoneNumbers);
+
             LoadProgrammyngLanguages();
            
+        }
+
+        private void InitializePhoneNumbers(ICollection<FriendPhoneNumber> phoneNumbers)
+        {
+            foreach (var wrapper in PhoneNumbers)
+            {
+                wrapper.PropertyChanged -= FriendPhoneModelWrapper_PropertyChanged;
+            }
+
+            PhoneNumbers.Clear();
+
+            foreach (var phoneNumber in phoneNumbers)
+            {
+                var wrapper = new FriendPhoneModelWrapper(phoneNumber);
+                PhoneNumbers.Add(wrapper);
+                wrapper.PropertyChanged += FriendPhoneModelWrapper_PropertyChanged;
+                
+            }
+        }
+
+        private void FriendPhoneModelWrapper_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (!HasChange)
+            {
+                HasChange = this._friendService
+                    .HasChanges();
+            }
+
+            if (e.PropertyName == nameof(FriendPhoneModelWrapper.HasErrors))
+            {
+                ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            }
         }
 
         private async void LoadProgrammyngLanguages()
@@ -143,6 +204,21 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private bool _hasChanges;
 
+        private FriendPhoneModelWrapper _selectedPhoneNumber;
+
+        public FriendPhoneModelWrapper SelectedPhoneNumber
+        {
+            get { return _selectedPhoneNumber; }
+            set 
+            { 
+                _selectedPhoneNumber = value;
+                OnPropertyChanged();
+                //When this property is set -> The can be changed/removed etc.
+                ((DelegateCommand)DeletePhoneNumberCommand).RaiseCanExecuteChanged();
+            }
+        }
+
+
         public bool HasChange
         {
             get { return _hasChanges; }
@@ -174,6 +250,9 @@ namespace FriendsOrganizer.UI.ViewModels
         public ICommand SaveCommand { get; }
 
         public ICommand DeleteCommand { get; }
-        
+
+        public ICommand SavePhoneNumberCommand { get; set; }
+        public ICommand DeletePhoneNumberCommand { get; set; }
+
     }
 }

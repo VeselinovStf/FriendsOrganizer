@@ -31,6 +31,7 @@ namespace FriendsOrganizer.Data.Repositories
         {
             return await this._dbContext
                 .Friends
+                .Include(f => f.PhoneNumbers)
                 .FirstOrDefaultAsync(f => f.Id == id);
         }
 

@@ -1,4 +1,6 @@
 ﻿using FriendsOrganizer.Data.Models;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace FriendsOrganizer.UI.ModelsWrappers
 {
@@ -57,6 +59,18 @@ namespace FriendsOrganizer.UI.ModelsWrappers
             get
             {
                 return GetValue<string>();
+            }
+            set
+            {
+                SetValue(value);
+            }
+        }
+
+        public ICollection<FriendPhoneNumber> PhoneNumbers
+        {
+            get
+            {
+                return GetValue<ICollection<FriendPhoneNumber>>();
             }
             set
             {

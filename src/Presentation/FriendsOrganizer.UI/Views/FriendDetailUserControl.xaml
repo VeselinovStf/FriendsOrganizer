@@ -79,13 +79,13 @@
                     Content="Add" 
                     Width="125"
                     Margin="10"
-                    Command="{Binding AddFriendPhoneNumberCommand}"
+                    Command="{Binding SavePhoneNumberCommand}"
                     />
                 <Button 
                     Content="Remove" 
                     Width="125"
                     Margin="10"
-                    Command="{Binding RemoveFriendPhoneNumberCommand}"
+                    Command="{Binding DeletePhoneNumberCommand}"
                     />
             </StackPanel>
             <DataGrid
@@ -97,7 +97,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn 
                         Header="Phone Numers" Width="*"
-                        Binding="{Binding Number, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"
+                        Binding="{Binding PhoneNumber, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"
                         />
                 </DataGrid.Columns>
             </DataGrid>
