@@ -3,6 +3,7 @@ using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.ModelsWrappers;
 using Prism.Commands;
 using Prism.Events;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -81,6 +82,18 @@ namespace FriendsOrganizer.UI.ViewModels
             Friend = new FriendModelWrapper(friendServiceCall);
 
             CheckChangeHandler(Friend);
+
+            if (Friend.Id == 0)
+            {
+                TriggerValidation(Friend);               
+            }
+        }
+
+        private void TriggerValidation(FriendModelWrapper friend)
+        {
+            Friend.FirstName = "";
+            Friend.LastName = "";
+            Friend.Email = "";
         }
 
         private bool _hasChanges;

@@ -30,7 +30,19 @@ namespace FriendsOrganizer.UI.Models
             var friend = this.Friends
                 .FirstOrDefault(f => f.Id == savedFriend.Id);
 
-            friend.DisplayProperty = savedFriend.DisplayProperty;
+            if (friend == null)
+            {
+                Friends.Add(
+                    new NavigationViewItemModel(
+                        savedFriend.Id, 
+                        savedFriend.DisplayProperty, 
+                        this._eventAggregator));
+            }
+            else
+            {
+                friend.DisplayProperty = savedFriend.DisplayProperty;
+            }
+            
         }
 
         public async Task LoadAsync()
