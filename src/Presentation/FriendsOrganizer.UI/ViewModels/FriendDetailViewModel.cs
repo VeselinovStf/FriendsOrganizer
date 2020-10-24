@@ -48,7 +48,13 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private void OnDeletePhoneNumberExecute()
         {
-            //throw new NotImplementedException();
+            SelectedPhoneNumber.PropertyChanged -= FriendPhoneModelWrapper_PropertyChanged;
+            Friend.PhoneNumbers.Remove(SelectedPhoneNumber.Model);
+            PhoneNumbers.Remove(SelectedPhoneNumber);
+            SelectedPhoneNumber = null;
+            HasChange = this._friendService
+                .HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
 
         private bool OnDeletePhoneNumberCanExecute()
@@ -58,7 +64,14 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private void OnSavePhoneNumberExecute()
         {
-            //throw new NotImplementedException();
+            var newNumber = new FriendPhoneModelWrapper(new FriendPhoneNumber());
+            newNumber.PropertyChanged += FriendPhoneModelWrapper_PropertyChanged;
+
+            PhoneNumbers.Add(newNumber);
+
+            Friend.PhoneNumbers.Add(newNumber.Model);
+            newNumber.PhoneNumber = "";
+
         }
 
         private async void OnDeleteExecute()
