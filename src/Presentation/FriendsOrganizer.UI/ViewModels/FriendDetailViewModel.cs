@@ -1,6 +1,7 @@
 ﻿using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.ModelsWrappers;
+using FriendsOrganizer.UI.UIServices;
 using Prism.Commands;
 using Prism.Events;
 using System.Threading.Tasks;
@@ -12,13 +13,16 @@ namespace FriendsOrganizer.UI.ViewModels
     {
         private readonly IFriendService _friendService;      
         private readonly IEventAggregator _eventAggregator;
+        private readonly IMessageDialogService _messageDialogService;
 
         public FriendDetailViewModel(
             IFriendService friendService,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator,
+            IMessageDialogService messageDialogService)
         {
             this._friendService = friendService;
             this._eventAggregator = eventAggregator;
+            this._messageDialogService = messageDialogService;
 
             this.SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             this.DeleteCommand = new DelegateCommand(OnDeleteExecute);
@@ -26,10 +30,17 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private async void OnDeleteExecute()
         {
-            await this._friendService.RemoveAsync(Friend.Model);
+            var confirmDeleteMessage = this._messageDialogService
+               .ShowOkCancelDialog("Are you really want to delete this friend?", "Delete friend");
 
-            this._eventAggregator.GetEvent<AfterFriendDeleteEvent>()
-                .Publish(Friend.Model.Id);
+            if (confirmDeleteMessage == MessageDialogResult.Ok)
+            {
+                await this._friendService.RemoveAsync(Friend.Model);
+
+                this._eventAggregator.GetEvent<AfterFriendDeleteEvent>()
+                    .Publish(Friend.Model.Id);
+            }
+           
         }
 
         private bool OnSaveCanExecute()

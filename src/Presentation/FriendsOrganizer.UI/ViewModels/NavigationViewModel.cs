@@ -1,5 +1,6 @@
 ﻿using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.UI.Events;
+using FriendsOrganizer.UI.UIServices;
 using FriendsOrganizer.UI.ViewModels;
 using Prism.Events;
 using System;
@@ -16,7 +17,8 @@ namespace FriendsOrganizer.UI.Models
 
         public NavigationViewModel(
             IFriendService friendService,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator,
+            IMessageDialogService messageDialogService)
         {
             this._friendService = friendService;
             this._eventAggregator = eventAggregator;
