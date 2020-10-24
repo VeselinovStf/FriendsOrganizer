@@ -1,9 +1,12 @@
 ﻿using FriendsOrganizer.Friends.Service.Abstraction;
+using FriendsOrganizer.ProgrammingLanguages.Service.Abstraction;
 using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.ModelsWrappers;
 using FriendsOrganizer.UI.UIServices;
 using Prism.Commands;
 using Prism.Events;
+using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -14,18 +17,24 @@ namespace FriendsOrganizer.UI.ViewModels
         private readonly IFriendService _friendService;      
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
+        private readonly IProgrammingLanguagesService _programmingLanguagesService;
+        public ObservableCollection<ProgrammingLanguageModelWrapper> ProgrammingLanguages;
 
         public FriendDetailViewModel(
             IFriendService friendService,
             IEventAggregator eventAggregator,
-            IMessageDialogService messageDialogService)
+            IMessageDialogService messageDialogService,
+            IProgrammingLanguagesService programmingLanguagesService)
         {
             this._friendService = friendService;
             this._eventAggregator = eventAggregator;
             this._messageDialogService = messageDialogService;
+            this._programmingLanguagesService = programmingLanguagesService;
 
             this.SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             this.DeleteCommand = new DelegateCommand(OnDeleteExecute);
+
+            this.ProgrammingLanguages = new ObservableCollection<ProgrammingLanguageModelWrapper>();
         }
 
         private async void OnDeleteExecute()
@@ -73,7 +82,22 @@ namespace FriendsOrganizer.UI.ViewModels
             Friend = new FriendModelWrapper(friendServiceCall);
 
             CheckChangeHandler(Friend);
+
+            LoadProgrammyngLanguages();
            
+        }
+
+        private async void LoadProgrammyngLanguages()
+        {
+            var languages = await this._programmingLanguagesService
+                .GetAllAsync();
+
+            foreach (var l in languages)
+            {
+                this.ProgrammingLanguages.Add(
+                    new ProgrammingLanguageModelWrapper(l)
+                    );
+            }
         }
 
         private void CheckChangeHandler(FriendModelWrapper friend)
@@ -148,8 +172,6 @@ namespace FriendsOrganizer.UI.ViewModels
         public ICommand SaveCommand { get; }
 
         public ICommand DeleteCommand { get; }
-
-
-
+        
     }
 }
