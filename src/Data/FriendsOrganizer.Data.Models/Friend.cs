@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using FriendsOrganizer.Data.Models.Abstraction;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FriendsOrganizer.Data.Models
 {
-    public class Friend 
+    public class Friend : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+        public Friend()
+        {
+            this.ProgrammingLanguages = new List<ProgrammingLanguage>();
+        }
 
         [Required]
         [StringLength(50,ErrorMessage = "Invalid Firs Name",MinimumLength = 5)]
@@ -19,6 +22,8 @@ namespace FriendsOrganizer.Data.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        public ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
 
         public string FullName()
         {

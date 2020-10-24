@@ -7,6 +7,7 @@ namespace FriendsOrganizer.Data
     public class FriendsOrganizerDbContext : DbContext
     {
         public DbSet<Friend> Friends { get; set; }
+        public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
 
         public FriendsOrganizerDbContext(DbContextOptions<FriendsOrganizerDbContext> options) : base(options)
         {

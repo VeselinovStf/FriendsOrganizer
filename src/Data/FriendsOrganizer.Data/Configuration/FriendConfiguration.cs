@@ -24,6 +24,10 @@ namespace FriendsOrganizer.Data.Configuration
             builder.Property(e => e.Email)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            builder.HasMany(f => f.ProgrammingLanguages)
+                .WithOne(pl => pl.Friend)
+                .HasForeignKey(pl => pl.FriendId);
         }
     }
 }

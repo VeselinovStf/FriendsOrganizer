@@ -22,6 +22,21 @@ namespace FriendsOrganizer.Data
                 dbContext.SaveChanges();
             }
 
+            if (!dbContext.ProgrammingLanguages.Any())
+            {
+                var newProgrammingLanguages = new List<ProgrammingLanguage>()
+                {
+                    new ProgrammingLanguage(){Name = "C#"},
+                    new ProgrammingLanguage(){Name = "Java"},
+                    new ProgrammingLanguage(){Name = "F#"},
+                    new ProgrammingLanguage(){Name = "C++"},
+                    new ProgrammingLanguage(){Name = "C"},
+                };
+
+                dbContext.ProgrammingLanguages.AddRange(newProgrammingLanguages);
+                dbContext.SaveChangesAsync();
+            }
+
         }
     }
 }
