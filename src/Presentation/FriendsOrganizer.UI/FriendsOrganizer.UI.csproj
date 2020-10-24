@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Business\FriendsOrganizer.Friend.Service\FriendsOrganizer.Friends.Service.csproj" />
+    <ProjectReference Include="..\..\Business\FriendsOrganizer.ProgrammingLanguages.Service\FriendsOrganizer.ProgrammingLanguages.Service.csproj" />
   </ItemGroup>
 
 </Project>

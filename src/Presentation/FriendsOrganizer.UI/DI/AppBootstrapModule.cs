@@ -4,6 +4,8 @@ using FriendsOrganizer.Data.Models;
 using FriendsOrganizer.Data.Repositories;
 using FriendsOrganizer.Friends.Service;
 using FriendsOrganizer.Friends.Service.Abstraction;
+using FriendsOrganizer.ProgrammingLanguages.Service;
+using FriendsOrganizer.ProgrammingLanguages.Service.Abstraction;
 using FriendsOrganizer.UI.Models;
 using FriendsOrganizer.UI.UIServices;
 using FriendsOrganizer.UI.ViewModels;
@@ -22,6 +24,7 @@ namespace FriendsOrganizer.UI.DI
             builder.RegisterType<FriendDetailViewModel>().AsSelf();
 
             builder.RegisterType<FriendService>().As<IFriendService>();
+            builder.RegisterType<ProgrammingLanguagesService>().As<IProgrammingLanguagesService>();
             builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
 
             builder.RegisterType<MainWindow>().AsSelf();
