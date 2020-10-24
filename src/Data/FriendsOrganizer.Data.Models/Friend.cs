@@ -8,7 +8,6 @@ namespace FriendsOrganizer.Data.Models
     {
         public Friend()
         {
-            this.ProgrammingLanguages = new List<ProgrammingLanguage>();
         }
 
         [Required]
@@ -23,7 +22,9 @@ namespace FriendsOrganizer.Data.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        public ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+        public int? ProgrammingLanguageId { get; set; }
+
+        public ProgrammingLanguage ProgrammingLanguage { get; set; }
 
         public string FullName()
         {

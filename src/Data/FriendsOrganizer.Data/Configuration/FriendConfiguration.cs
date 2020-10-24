@@ -25,9 +25,8 @@ namespace FriendsOrganizer.Data.Configuration
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.HasMany(f => f.ProgrammingLanguages)
-                .WithOne(pl => pl.Friend)
-                .HasForeignKey(pl => pl.FriendId);
+            builder.HasOne(f => f.ProgrammingLanguage);
+                 
         }
     }
 }

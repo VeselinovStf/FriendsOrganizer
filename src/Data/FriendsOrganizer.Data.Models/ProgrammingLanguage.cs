@@ -6,8 +6,6 @@ namespace FriendsOrganizer.Data.Models
     {
         public string Name { get; set; }
 
-        public int? FriendId { get; set; }
-
-        public Friend Friend { get; set; }
+        
     }
 }
