@@ -29,6 +29,7 @@ namespace FriendsOrganizer.UI.DI
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
 
             builder.RegisterType<FriendRepository>().As<IAsyncRepository<Friend>>();
+            builder.RegisterType<ProgrammingLanguageRepository>().As<IAsyncRepository<ProgrammingLanguage>>();
         }
     }
 }
