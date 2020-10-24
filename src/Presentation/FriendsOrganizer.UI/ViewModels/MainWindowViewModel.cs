@@ -32,10 +32,18 @@ namespace FriendsOrganizer.UI.ViewModels
             this._eventAggregator.GetEvent<OpenFriendDetailsEvent>()
                .Subscribe(OnSelectedFriendEventHandler);
 
+            this._eventAggregator.GetEvent<AfterFriendDeleteEvent>()
+                .Subscribe(AfterFriendDeleteHandler);
+
             CreateNewFriendCommmand = new DelegateCommand(OnCreateNewFriendExecute);
         }
 
-     
+        private void AfterFriendDeleteHandler(int obj)
+        {
+            this.FriendDetailViewModel = null;
+            
+        }
+
         private FriendDetailViewModel _friendDetailViewModel;
 
         public FriendDetailViewModel FriendDetailViewModel

@@ -5,11 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FriendsOrganizer.UI.Views"
         xmlns:views="clr-namespace:FriendsOrganizer.UI.Views"
+        xmlns:viewModels="clr-namespace:FriendsOrganizer.UI.ViewModels"
         mc:Ignorable="d"
         Title="Friends Organizer" 
         Height="450"
         Width="600"
         FontSize="20">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModels:FriendDetailViewModel}">
+            <views:FriendDetailUserControl/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition 
@@ -35,10 +41,10 @@
         <views:NavigationUserControl 
             Grid.Row="1"
             DataContext="{Binding NavigationViewModel}"/>
-        <views:FriendDetailUserControl 
+        <ContentControl
             Grid.Row="1"
             Grid.Column="1"
-            DataContext="{Binding FriendDetailViewModel}"/>
+            Content="{Binding FriendDetailViewModel}"/>
         
     </Grid>
 </Window>
