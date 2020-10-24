@@ -56,10 +56,17 @@
                     UpdateSourceTrigger=PropertyChanged}"
                 />
 
-        <StackPanel Grid.Row="7">
+        <StackPanel Grid.Row="7"
+                    Orientation="Horizontal"
+                    >
             <Button Content="Save"
                     Margin="10"
+                    Width="127"
                     Command="{Binding SaveCommand}"/>
+            <Button Content="Delete"
+                    Margin="10"
+                    Width="127"
+                    Command="{Binding DeleteCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

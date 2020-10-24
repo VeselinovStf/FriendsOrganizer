@@ -3,7 +3,6 @@ using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.ModelsWrappers;
 using Prism.Commands;
 using Prism.Events;
-using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -22,6 +21,12 @@ namespace FriendsOrganizer.UI.ViewModels
             this._eventAggregator = eventAggregator;
 
             this.SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+            this.DeleteCommand = new DelegateCommand(OnDeleteExecute);
+        }
+
+        private async void OnDeleteExecute()
+        {
+            await this._friendService.RemoveAsync(Friend.Model);
         }
 
         private bool OnSaveCanExecute()
@@ -128,6 +133,9 @@ namespace FriendsOrganizer.UI.ViewModels
 
         public ICommand SaveCommand { get; }
 
-        
+        public ICommand DeleteCommand { get; }
+
+
+
     }
 }

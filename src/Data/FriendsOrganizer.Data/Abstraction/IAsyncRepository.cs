@@ -13,6 +13,7 @@ namespace FriendsOrganizer.Data.Abstraction
         Task SaveChangesAsync();
 
         bool HasChanges();
-        Task AddAsync(Friend newFriend);
+        Task AddAsync(T newFriend);
+        void Remove(T model);
     }
 }

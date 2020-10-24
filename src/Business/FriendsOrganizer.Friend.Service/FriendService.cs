@@ -52,6 +52,12 @@ namespace FriendsOrganizer.Friends.Service
             return this._friendRepository.HasChanges();
         }
 
+        public async Task RemoveAsync(Friend model)
+        {
+            this._friendRepository.Remove(model);
+            await this._friendRepository.SaveChangesAsync();
+        }
+
         public async Task UpdateFriendAsync()
         {
             await this._friendRepository.SaveChangesAsync();

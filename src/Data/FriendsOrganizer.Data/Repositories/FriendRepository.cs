@@ -39,6 +39,11 @@ namespace FriendsOrganizer.Data.Repositories
             return this._dbContext.ChangeTracker.HasChanges();
         }
 
+        public void Remove(Friend model)
+        {
+            this._dbContext.Friends.Remove(model);
+        }
+
         public async Task SaveChangesAsync()
         {
             await this._dbContext.SaveChangesAsync();
