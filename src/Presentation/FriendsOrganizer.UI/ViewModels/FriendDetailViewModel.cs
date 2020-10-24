@@ -18,7 +18,7 @@ namespace FriendsOrganizer.UI.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
         private readonly IProgrammingLanguagesService _programmingLanguagesService;
-        public ObservableCollection<ProgrammingLanguageModelWrapper> ProgrammingLanguages;
+        public ObservableCollection<ProgrammingLanguageModelWrapper> ProgrammingLanguages { get; set; }
 
         public FriendDetailViewModel(
             IFriendService friendService,

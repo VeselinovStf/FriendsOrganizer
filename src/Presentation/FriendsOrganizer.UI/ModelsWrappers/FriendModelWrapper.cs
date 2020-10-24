@@ -14,6 +14,19 @@ namespace FriendsOrganizer.UI.ModelsWrappers
            
         }
 
+        public int? ProgrammingLanguageId
+        {
+            get 
+            { 
+                return GetValue<int>(); 
+            }
+            set
+            {
+                SetValue(value);
+            }
+
+        }
+
         public string FirstName
         {
             get
