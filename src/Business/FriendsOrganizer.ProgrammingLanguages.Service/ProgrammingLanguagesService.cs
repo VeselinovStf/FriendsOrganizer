@@ -1,4 +1,5 @@
-﻿using FriendsOrganizer.Data.Abstraction;
+﻿using FriendsOrganizer.Data;
+using FriendsOrganizer.Data.Abstraction;
 using FriendsOrganizer.Data.Models;
 using FriendsOrganizer.ProgrammingLanguages.Service.Abstraction;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ namespace FriendsOrganizer.ProgrammingLanguages.Service
 {
     public class ProgrammingLanguagesService : IProgrammingLanguagesService
     {
-        private readonly IAsyncRepository<ProgrammingLanguage> _programmingLanguageRepository;
+        private readonly IGenericRepository<ProgrammingLanguage,FriendsOrganizerDbContext> _programmingLanguageRepository;
 
-        public ProgrammingLanguagesService(IAsyncRepository<ProgrammingLanguage> programmingLanguageRepository)
+        public ProgrammingLanguagesService(IGenericRepository<ProgrammingLanguage, FriendsOrganizerDbContext> programmingLanguageRepository)
         {
             this._programmingLanguageRepository = programmingLanguageRepository;
         }

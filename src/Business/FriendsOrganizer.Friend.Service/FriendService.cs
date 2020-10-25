@@ -1,5 +1,7 @@
-﻿using FriendsOrganizer.Data.Abstraction;
+﻿using FriendsOrganizer.Data;
+using FriendsOrganizer.Data.Abstraction;
 using FriendsOrganizer.Data.Models;
+using FriendsOrganizer.Data.Repositories;
 using FriendsOrganizer.Friends.Service.Abstraction;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,10 @@ namespace FriendsOrganizer.Friends.Service
 {
     public class FriendService : IFriendService
     {
-        private readonly IAsyncRepository<Friend> _friendRepository;
+        private readonly IGenericRepository<Friend, FriendsOrganizerDbContext> _friendRepository;
 
         public FriendService(
-            IAsyncRepository<Friend> friendRepository
+            IGenericRepository<Friend, FriendsOrganizerDbContext> friendRepository
             )
         {
             this._friendRepository = friendRepository;

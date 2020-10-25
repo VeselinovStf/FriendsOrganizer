@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FriendsOrganizer.Data;
 using FriendsOrganizer.Data.Abstraction;
 using FriendsOrganizer.Data.Models;
 using FriendsOrganizer.Data.Repositories;
@@ -33,8 +34,8 @@ namespace FriendsOrganizer.UI.DI
 
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
 
-            builder.RegisterType<FriendRepository>().As<IAsyncRepository<Friend>>();
-            builder.RegisterType<ProgrammingLanguageRepository>().As<IAsyncRepository<ProgrammingLanguage>>();
+            builder.RegisterType<FriendRepository>().As<IGenericRepository<Friend, FriendsOrganizerDbContext>>();
+            builder.RegisterType<ProgrammingLanguageRepository>().As<IGenericRepository<ProgrammingLanguage, FriendsOrganizerDbContext>>();
         }
     }
 }
