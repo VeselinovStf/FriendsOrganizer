@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using FriendOrganizer.Meetings.Service;
+using FriendOrganizer.Meetings.Service.Abstraction;
 using FriendsOrganizer.Data;
 using FriendsOrganizer.Data.Abstraction;
 using FriendsOrganizer.Data.Models;
@@ -24,16 +26,19 @@ namespace FriendsOrganizer.UI.DI
             builder.RegisterType<MainWindowViewModel>().AsSelf();
             builder.RegisterType<NavigationViewModel>().AsSelf();
             builder.RegisterType<FriendDetailViewModel>().As<IFriendDetailViewModel>();
-            
-            builder.RegisterType<FriendService>().As<IFriendService>();
-            builder.RegisterType<ProgrammingLanguagesService>().As<IProgrammingLanguagesService>();
-            builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
+            builder.RegisterType<MeetingDetailViewModel>().As<IMeetingDetailViewModel>();
 
             builder.RegisterType<MainWindow>().AsSelf();
+
+            builder.RegisterType<FriendService>().As<IFriendService>();
+            builder.RegisterType<ProgrammingLanguagesService>().As<IProgrammingLanguagesService>();
+            builder.RegisterType<MeetingService>().As<IMeetingService>();
+            builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
 
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
 
             builder.RegisterType<FriendRepository>().As<IGenericRepository<Friend, FriendsOrganizerDbContext>>();
+            builder.RegisterType<MeetingRepository>().As<IGenericRepository<Friend, FriendsOrganizerDbContext>>();
             builder.RegisterType<ProgrammingLanguageRepository>().As<IGenericRepository<ProgrammingLanguage, FriendsOrganizerDbContext>>();
         }
     }

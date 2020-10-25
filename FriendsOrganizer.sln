@@ -26,7 +26,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{3D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FriendsOrganizer.Friends.Service", "src\Business\FriendsOrganizer.Friend.Service\FriendsOrganizer.Friends.Service.csproj", "{B944A5FA-76F6-4324-88AE-E04603367E25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendsOrganizer.ProgrammingLanguages.Service", "src\Business\FriendsOrganizer.ProgrammingLanguages.Service\FriendsOrganizer.ProgrammingLanguages.Service.csproj", "{15E28C5E-4E1C-49B8-B9EB-CBCFE6F19662}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FriendsOrganizer.ProgrammingLanguages.Service", "src\Business\FriendsOrganizer.ProgrammingLanguages.Service\FriendsOrganizer.ProgrammingLanguages.Service.csproj", "{15E28C5E-4E1C-49B8-B9EB-CBCFE6F19662}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendOrganizer.Meetings.Service", "src\Business\FriendOrganizer.Meetings.Service\FriendOrganizer.Meetings.Service.csproj", "{63D963E2-A62B-4E23-A606-4AC7E6A7F1AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 		{15E28C5E-4E1C-49B8-B9EB-CBCFE6F19662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15E28C5E-4E1C-49B8-B9EB-CBCFE6F19662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15E28C5E-4E1C-49B8-B9EB-CBCFE6F19662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63D963E2-A62B-4E23-A606-4AC7E6A7F1AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63D963E2-A62B-4E23-A606-4AC7E6A7F1AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63D963E2-A62B-4E23-A606-4AC7E6A7F1AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63D963E2-A62B-4E23-A606-4AC7E6A7F1AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{3D5240FF-6703-4DED-8C73-3310F1F72B45} = {804838AF-ED91-4409-AC11-21BB8C7591F8}
 		{B944A5FA-76F6-4324-88AE-E04603367E25} = {3D5240FF-6703-4DED-8C73-3310F1F72B45}
 		{15E28C5E-4E1C-49B8-B9EB-CBCFE6F19662} = {3D5240FF-6703-4DED-8C73-3310F1F72B45}
+		{63D963E2-A62B-4E23-A606-4AC7E6A7F1AA} = {3D5240FF-6703-4DED-8C73-3310F1F72B45}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3E61E455-C9AA-46D9-B64C-C905167C1813}
