@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FriendsOrganizer.UI.UIServices;
 using Prism.Commands;
 using FriendsOrganizer.UI.ViewModels.Abstraction;
+using FriendsOrganizer.UI.Events.Arguments;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
@@ -30,7 +31,7 @@ namespace FriendsOrganizer.UI.ViewModels
             this._eventAggregator = eventAggregator;
             this._messageDialogService = messageDialogService;
 
-            this._eventAggregator.GetEvent<OpenFriendDetailsEvent>()
+            this._eventAggregator.GetEvent<OpenDetailsEvent>()
                .Subscribe(OnSelectedFriendEventHandler);
 
             this._eventAggregator.GetEvent<AfterFriendDeleteEvent>()
@@ -67,13 +68,19 @@ namespace FriendsOrganizer.UI.ViewModels
             await this.NavigationViewModel.LoadAsync();
         }
 
-        private async void OnSelectedFriendEventHandler(int friendId)
+        private async void OnSelectedFriendEventHandler(OpenDetailEventArgs args)
         {
             MessageUserIfFriendIsSelected();
-           
-            DetailViewModel = this._detailViewModelCreator();
 
-            await this.DetailViewModel.LoadAsync(friendId);
+            switch (args.ViewModelName)
+            {
+                case nameof(FriendDetailViewModel):
+                    DetailViewModel = this._detailViewModelCreator();
+                    break;              
+            }
+           
+
+            await this.DetailViewModel.LoadAsync(args.Id);
         }
 
         private void MessageUserIfFriendIsSelected()

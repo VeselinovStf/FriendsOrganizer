@@ -20,7 +20,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button Content="{Binding DisplayProperty}"
-                                Command="{Binding OpenFriendDetailsCommand}">
+                                Command="{Binding OpenDetailsCommand}">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid x:Name="grid">

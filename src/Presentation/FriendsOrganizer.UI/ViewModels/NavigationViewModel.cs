@@ -53,7 +53,8 @@ namespace FriendsOrganizer.UI.Models
                     new NavigationViewItemModel(
                         savedFriend.Id, 
                         savedFriend.DisplayProperty, 
-                        this._eventAggregator));
+                        this._eventAggregator,
+                        nameof(FriendDetailViewModel)));
             }
             else
             {
@@ -71,7 +72,12 @@ namespace FriendsOrganizer.UI.Models
 
             foreach (var friend in friendsLookupServiceCall)
             {
-                Friends.Add(new NavigationViewItemModel(friend.Id, friend.FullName(), this._eventAggregator ));
+                Friends.Add(
+                    new NavigationViewItemModel(
+                        friend.Id, 
+                        friend.FullName(), 
+                        this._eventAggregator,
+                        nameof(FriendDetailViewModel)));
             }
         }
         public ObservableCollection<NavigationViewItemModel> Friends { get; set; }
