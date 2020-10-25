@@ -9,6 +9,7 @@ namespace FriendsOrganizer.Data.Models
         public Friend()
         {
             this.PhoneNumbers = new HashSet<FriendPhoneNumber>();
+            this.FriendMeetings = new HashSet<FriendMeeting>();
         }
 
         [Required]
@@ -28,6 +29,7 @@ namespace FriendsOrganizer.Data.Models
         public ProgrammingLanguage ProgrammingLanguage { get; set; }
 
         public ICollection<FriendPhoneNumber> PhoneNumbers { get; set; }
+        public ICollection<FriendMeeting> FriendMeetings { get; set; }
 
         public string FullName()
         {

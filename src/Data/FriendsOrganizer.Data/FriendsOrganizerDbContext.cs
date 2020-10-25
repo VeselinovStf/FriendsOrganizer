@@ -7,6 +7,8 @@ namespace FriendsOrganizer.Data
     public class FriendsOrganizerDbContext : DbContext
     {
         public DbSet<Friend> Friends { get; set; }
+        public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<FriendMeeting> FriendMeetings { get; set; }
         public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
         public DbSet<FriendPhoneNumber> FriendsPhonesNumbers { get; set; }
 

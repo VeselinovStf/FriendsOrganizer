@@ -30,7 +30,10 @@ namespace FriendsOrganizer.Data.Configuration
             builder.HasMany(f => f.PhoneNumbers)
                 .WithOne(ffn => ffn.Friend)
                 .HasForeignKey(ffn => ffn.FriendId);
-                 
+
+            builder.HasMany(f => f.FriendMeetings)
+                .WithOne(m => m.Friend)
+                .HasForeignKey(m => m.FriendId);
         }
     }
 }
