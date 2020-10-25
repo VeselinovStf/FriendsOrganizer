@@ -9,6 +9,7 @@ using FriendsOrganizer.ProgrammingLanguages.Service.Abstraction;
 using FriendsOrganizer.UI.Models;
 using FriendsOrganizer.UI.UIServices;
 using FriendsOrganizer.UI.ViewModels;
+using FriendsOrganizer.UI.ViewModels.Abstraction;
 using FriendsOrganizer.UI.Views;
 using Prism.Events;
 
@@ -21,7 +22,8 @@ namespace FriendsOrganizer.UI.DI
         {
             builder.RegisterType<MainWindowViewModel>().AsSelf();
             builder.RegisterType<NavigationViewModel>().AsSelf();
-            builder.RegisterType<FriendDetailViewModel>().AsSelf();
+            builder.RegisterType<FriendDetailViewModel>().As<IFriendDetailViewModel>();
+            //builder.RegisterType<FriendDetailViewModel>().As<IDetailViewModel>();
 
             builder.RegisterType<FriendService>().As<IFriendService>();
             builder.RegisterType<ProgrammingLanguagesService>().As<IProgrammingLanguagesService>();

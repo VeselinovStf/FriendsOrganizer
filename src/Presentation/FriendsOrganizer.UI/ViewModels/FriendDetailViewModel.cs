@@ -4,9 +4,9 @@ using FriendsOrganizer.ProgrammingLanguages.Service.Abstraction;
 using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.ModelsWrappers;
 using FriendsOrganizer.UI.UIServices;
+using FriendsOrganizer.UI.ViewModels.Abstraction;
 using Prism.Commands;
 using Prism.Events;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,7 +16,7 @@ using System.Windows.Input;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
-    public class FriendDetailViewModel : ViewModelBase
+    public class FriendDetailViewModel : ViewModelBase, IFriendDetailViewModel
     {
         private readonly IFriendService _friendService;      
         private readonly IEventAggregator _eventAggregator;

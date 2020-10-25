@@ -5,27 +5,28 @@ using System;
 using System.Threading.Tasks;
 using FriendsOrganizer.UI.UIServices;
 using Prism.Commands;
+using FriendsOrganizer.UI.ViewModels.Abstraction;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
-    public class MainWindowViewModel :ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
 
         public DelegateCommand CreateNewFriendCommmand { get; }
-        public Func<FriendDetailViewModel> _friendDetailViewModelCreator { get; }
+        public Func<IFriendDetailViewModel> _detailViewModelCreator { get; }
 
         public NavigationViewModel NavigationViewModel { get; }
 
         public MainWindowViewModel(
             NavigationViewModel navigationViewModel,
-            Func<FriendDetailViewModel> friendDetailViewModelCreator,
+            Func<IFriendDetailViewModel> friendDetailViewModelCreator,
             IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService)
         {
             this.NavigationViewModel = navigationViewModel;
-            this._friendDetailViewModelCreator = friendDetailViewModelCreator;
+            this._detailViewModelCreator = friendDetailViewModelCreator;
             this._eventAggregator = eventAggregator;
             this._messageDialogService = messageDialogService;
 
@@ -40,21 +41,21 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private void AfterFriendDeleteHandler(int obj)
         {
-            this.FriendDetailViewModel = null;
+            this.DetailViewModel = null;
             
         }
 
-        private FriendDetailViewModel _friendDetailViewModel;
+        private IDetailViewModel _detailViewModel;
 
-        public FriendDetailViewModel FriendDetailViewModel
+        public IDetailViewModel DetailViewModel
         {
             get 
             { 
-                return _friendDetailViewModel;
+                return _detailViewModel;
             }
             private set 
             {
-                _friendDetailViewModel = value;
+                _detailViewModel = value;
                 OnPropertyChanged();
             }
         }
@@ -70,14 +71,14 @@ namespace FriendsOrganizer.UI.ViewModels
         {
             MessageUserIfFriendIsSelected();
            
-            FriendDetailViewModel = this._friendDetailViewModelCreator();
+            DetailViewModel = this._detailViewModelCreator();
 
-            await this.FriendDetailViewModel.LoadAsync(friendId);
+            await this.DetailViewModel.LoadAsync(friendId);
         }
 
         private void MessageUserIfFriendIsSelected()
         {
-            if (FriendDetailViewModel != null && FriendDetailViewModel.HasChange)
+            if (DetailViewModel != null && DetailViewModel.HasChange)
             {
                 var result = this._messageDialogService.ShowOkCancelDialog("Are you shore to change friend? Your changes will be lost!", "Question");
 
@@ -92,9 +93,9 @@ namespace FriendsOrganizer.UI.ViewModels
         {
             MessageUserIfFriendIsSelected();
 
-            FriendDetailViewModel = this._friendDetailViewModelCreator();
+            DetailViewModel = this._detailViewModelCreator();
 
-            await this.FriendDetailViewModel.LoadAddableAsync();
+            await this.DetailViewModel.LoadAddableAsync();
         }
 
     }
