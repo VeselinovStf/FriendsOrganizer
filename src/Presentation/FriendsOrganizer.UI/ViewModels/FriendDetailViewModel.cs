@@ -2,6 +2,7 @@
 using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.ProgrammingLanguages.Service.Abstraction;
 using FriendsOrganizer.UI.Events;
+using FriendsOrganizer.UI.Events.Arguments;
 using FriendsOrganizer.UI.ModelsWrappers;
 using FriendsOrganizer.UI.UIServices;
 using FriendsOrganizer.UI.ViewModels.Abstraction;
@@ -83,8 +84,12 @@ namespace FriendsOrganizer.UI.ViewModels
             {
                 await this._friendService.RemoveAsync(Friend.Model);
 
-                this._eventAggregator.GetEvent<AfterFriendDeleteEvent>()
-                    .Publish(Friend.Model.Id);
+                this._eventAggregator.GetEvent<AfterDeleteEvent>()
+                    .Publish(new AfterDeleteEventArgs()
+                    {
+                        Id = Friend.Model.Id,
+                        ViewModelName = nameof(FriendDetailViewModel)
+                    });
             }
            
         }
@@ -104,11 +109,12 @@ namespace FriendsOrganizer.UI.ViewModels
 
             HasChange = this._friendService.HasChanges();
 
-            this._eventAggregator.GetEvent<AfterFriendSaveDetailsEvent>()
-                .Publish(new AfterFriendSaveDetailsLookup()
+            this._eventAggregator.GetEvent<AfterSaveDetailsEvent>()
+                .Publish(new AfterSaveDetailsEventArgs()
                 {
                     Id = Friend.Id,
-                    DisplayProperty = Friend.FirstName + " " + Friend.LastName
+                    DisplayProperty = Friend.FirstName + " " + Friend.LastName,
+                    ViewModelName = nameof(FriendDetailViewModel)
                 });
         }
 

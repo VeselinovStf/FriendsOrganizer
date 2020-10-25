@@ -1,5 +1,6 @@
 ﻿using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.UI.Events;
+using FriendsOrganizer.UI.Events.Arguments;
 using FriendsOrganizer.UI.UIServices;
 using FriendsOrganizer.UI.ViewModels;
 using Prism.Events;
@@ -24,43 +25,54 @@ namespace FriendsOrganizer.UI.Models
             this._eventAggregator = eventAggregator;
             this.Friends = new ObservableCollection<NavigationViewItemModel>();
 
-            this._eventAggregator.GetEvent<AfterFriendSaveDetailsEvent>()
-                .Subscribe(AfterSaveFriendEventHandler);
+            this._eventAggregator.GetEvent<AfterSaveDetailsEvent>()
+                .Subscribe(AfterDetailsSaveEventHandler);
 
-            this._eventAggregator.GetEvent<AfterFriendDeleteEvent>()
-                .Subscribe(AfterFriendDeleteHandler);
+            this._eventAggregator.GetEvent<AfterDeleteEvent>()
+                .Subscribe(AfterDeleteHandler);
         }
 
-        private void AfterFriendDeleteHandler(int friendId)
+        private void AfterDeleteHandler(AfterDeleteEventArgs args)
         {
-            var friend = this.Friends
-                .FirstOrDefault(f => f.Id == friendId);
-
-            if (friend != null)
+            switch (args.ViewModelName)
             {
-                Friends.Remove(friend);
+                case nameof(FriendDetailViewModel):
+                    var friend = this.Friends
+                        .FirstOrDefault(f => f.Id == args.Id);
+
+                    if (friend != null)
+                    {
+                        Friends.Remove(friend);
+                    }
+                    break;
+
             }
+
         }
 
-        private void AfterSaveFriendEventHandler(AfterFriendSaveDetailsLookup savedFriend)
+        private void AfterDetailsSaveEventHandler(AfterSaveDetailsEventArgs args)
         {
-            var friend = this.Friends
-                .FirstOrDefault(f => f.Id == savedFriend.Id);
+            switch (args.ViewModelName)
+            {
+                case nameof(FriendDetailViewModel):
+                    var friend = this.Friends
+                .FirstOrDefault(f => f.Id == args.Id);
 
-            if (friend == null)
-            {
-                Friends.Add(
-                    new NavigationViewItemModel(
-                        savedFriend.Id, 
-                        savedFriend.DisplayProperty, 
-                        this._eventAggregator,
-                        nameof(FriendDetailViewModel)));
+                    if (friend == null)
+                    {
+                        Friends.Add(
+                            new NavigationViewItemModel(
+                                args.Id,
+                                args.DisplayProperty,
+                                this._eventAggregator,
+                                nameof(FriendDetailViewModel)));
+                    }
+                    else
+                    {
+                        friend.DisplayProperty = args.DisplayProperty;
+                    }
+                    break;
             }
-            else
-            {
-                friend.DisplayProperty = savedFriend.DisplayProperty;
-            }
-            
         }
 
         public async Task LoadAsync()
@@ -74,8 +86,8 @@ namespace FriendsOrganizer.UI.Models
             {
                 Friends.Add(
                     new NavigationViewItemModel(
-                        friend.Id, 
-                        friend.FullName(), 
+                        friend.Id,
+                        friend.FullName(),
                         this._eventAggregator,
                         nameof(FriendDetailViewModel)));
             }
