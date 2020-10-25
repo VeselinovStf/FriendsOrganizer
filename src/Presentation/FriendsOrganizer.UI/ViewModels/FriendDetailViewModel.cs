@@ -206,6 +206,8 @@ namespace FriendsOrganizer.UI.ViewModels
 
             Friend = new FriendModelWrapper(friendServiceCall);
 
+            LoadProgrammyngLanguages();
+
             CheckChangeHandler(Friend);
 
             if (Friend.Id == 0)

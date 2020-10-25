@@ -20,7 +20,7 @@ namespace FriendsOrganizer.UI.ModelsWrappers
         {
             get 
             { 
-                return GetValue<int>(); 
+                return GetValue<int?>(); 
             }
             set
             {
