@@ -44,7 +44,7 @@ namespace FriendsOrganizer.UI.Models
                     AfterDetailsDeleted(Friends, args);
                     break;
                 case nameof(MeetingDetailViewModel):
-                    AfterDetailsDeleted(Friends, args);
+                    AfterDetailsDeleted(Meetings, args);
                     break;
             }
 
@@ -57,7 +57,7 @@ namespace FriendsOrganizer.UI.Models
 
             if (item != null)
             {
-                Friends.Remove(item);
+                items.Remove(item);
             }
         }
 
@@ -109,7 +109,7 @@ namespace FriendsOrganizer.UI.Models
 
             foreach (var meeting in meetingsLookupServiceCall)
             {
-                Friends.Add(
+                Meetings.Add(
                     new NavigationViewItemModel(
                         meeting.Id,
                         meeting.Title,

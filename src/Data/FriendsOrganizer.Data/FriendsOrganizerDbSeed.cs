@@ -1,4 +1,5 @@
 ﻿using FriendsOrganizer.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,6 +43,26 @@ namespace FriendsOrganizer.Data
                 var newPhoneNumber = new FriendPhoneNumber() { PhoneNumber = "+35988765342", FriendId = dbContext.Friends.FirstOrDefault().Id };
 
                 dbContext.FriendsPhonesNumbers.AddAsync(newPhoneNumber);
+                dbContext.SaveChangesAsync();
+            }
+
+            if (!dbContext.Meetings.Any())
+            {
+                var newMeetingNumber = new Meeting()
+                {
+                    Title = "Watching Socker",
+                    StartAt = DateTime.Now.Date,
+                    EndAt = DateTime.Now.Date,
+                    FriendMeetings = new List<FriendMeeting>()
+                {
+                  new FriendMeeting()
+                  {
+                       FriendId = dbContext.Friends.FirstOrDefault().Id,
+                  }
+                }
+                };
+
+                dbContext.Meetings.AddAsync(newMeetingNumber);
                 dbContext.SaveChangesAsync();
             }
 
