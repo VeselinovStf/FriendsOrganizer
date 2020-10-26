@@ -1,4 +1,5 @@
 ﻿using FriendsOrganizer.Data.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.Meetings.Service.Abstraction
@@ -10,5 +11,6 @@ namespace FriendOrganizer.Meetings.Service.Abstraction
         bool HasChanges();
         void Remove(Meeting model);
         Task AddAsync(Meeting newMeeting);
+        Task<IEnumerable<Meeting>> GetAllAsync();
     }
 }

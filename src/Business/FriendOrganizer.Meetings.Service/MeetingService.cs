@@ -2,6 +2,7 @@
 using FriendsOrganizer.Data;
 using FriendsOrganizer.Data.Abstraction;
 using FriendsOrganizer.Data.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.Meetings.Service
@@ -19,6 +20,11 @@ namespace FriendOrganizer.Meetings.Service
         public async Task AddAsync(Meeting newMeeting)
         {
              await this._meetingRepository.AddAsync(newMeeting);
+        }
+
+        public async Task<IEnumerable<Meeting>> GetAllAsync()
+        {
+            return await this._meetingRepository.GetAllAsync();
         }
 
         public async Task<Meeting> GetAsync(int id)
