@@ -7,30 +7,29 @@ using FriendsOrganizer.UI.UIServices;
 using Prism.Commands;
 using FriendsOrganizer.UI.ViewModels.Abstraction;
 using FriendsOrganizer.UI.Events.Arguments;
+using Autofac.Features.Indexed;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly Func<IMeetingDetailViewModel> _meetingDetailViewModelCreator;
+        private readonly IIndex<string, IDetailViewModel> _detailViewModelCreator;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
 
         public DelegateCommand CreateNewFriendCommmand { get; }
-        public Func<IFriendDetailViewModel> _detailViewModelCreator { get; }
+
 
         public NavigationViewModel NavigationViewModel { get; }
 
         public MainWindowViewModel(
             NavigationViewModel navigationViewModel,
-            Func<IFriendDetailViewModel> friendDetailViewModelCreator,
-            Func<IMeetingDetailViewModel> meetingDetailViewModelCreator,
+            IIndex<string, IDetailViewModel> detailViewModelCreator,
             IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService)
         {
             this.NavigationViewModel = navigationViewModel;
-            this._detailViewModelCreator = friendDetailViewModelCreator;
-            this._meetingDetailViewModelCreator = meetingDetailViewModelCreator;
+            this._detailViewModelCreator = detailViewModelCreator;
             this._eventAggregator = eventAggregator;
             this._messageDialogService = messageDialogService;
 
@@ -75,18 +74,7 @@ namespace FriendsOrganizer.UI.ViewModels
         {
             MessageUserIfFriendIsSelected();
 
-            switch (args.ViewModelName)
-            {
-                case nameof(FriendDetailViewModel):
-                    DetailViewModel = this._detailViewModelCreator();
-                    break;
-                case nameof(MeetingDetailViewModel):
-                    DetailViewModel = this._meetingDetailViewModelCreator();
-                    break;
-                default:
-                    throw new Exception("Un recognized view");
-            }
-           
+            DetailViewModel = this._detailViewModelCreator[args.ViewModelName];           
 
             await this.DetailViewModel.LoadAsync(args.Id);
         }
@@ -108,7 +96,7 @@ namespace FriendsOrganizer.UI.ViewModels
         {
             MessageUserIfFriendIsSelected();
 
-            DetailViewModel = this._detailViewModelCreator();
+            DetailViewModel = this._detailViewModelCreator[nameof(FriendDetailViewModel)];
 
             await this.DetailViewModel.LoadAddableAsync();
         }

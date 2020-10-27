@@ -25,8 +25,10 @@ namespace FriendsOrganizer.UI.DI
         {
             builder.RegisterType<MainWindowViewModel>().AsSelf();
             builder.RegisterType<NavigationViewModel>().AsSelf();
-            builder.RegisterType<FriendDetailViewModel>().As<IFriendDetailViewModel>();
-            builder.RegisterType<MeetingDetailViewModel>().As<IMeetingDetailViewModel>();
+
+            builder.RegisterType<FriendDetailViewModel>().Keyed<IDetailViewModel>(nameof(FriendDetailViewModel));
+            builder.RegisterType<MeetingDetailViewModel>().Keyed<IDetailViewModel>(nameof(MeetingDetailViewModel));
+
 
             builder.RegisterType<MainWindow>().AsSelf();
 
