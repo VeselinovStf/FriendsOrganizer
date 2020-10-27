@@ -21,13 +21,27 @@ namespace FriendsOrganizer.UI.ModelsWrappers
         public DateTime StartAt
         {
             get { return GetValue<DateTime>(); }
-            set { SetValue<DateTime>(value); }
+            set 
+            {
+                SetValue<DateTime>(value);
+                if (StartAt < EndAt)
+                {
+                    EndAt = StartAt;
+                }
+            }
         }
 
         public DateTime EndAt
         {
             get { return GetValue<DateTime>(); }
-            set { SetValue<DateTime>(value); }
+            set
+            {
+                SetValue<DateTime>(value);
+                if (EndAt < StartAt)
+                {
+                    StartAt = EndAt;
+                }
+            }
         }
 
     }
