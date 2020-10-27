@@ -84,6 +84,11 @@ namespace FriendsOrganizer.UI.ViewModels
 
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+
+            if (Meeting.Id == 0)
+            {
+                Meeting.Title = "";
+            }
         }
 
         protected override async void OnDeleteExecute()

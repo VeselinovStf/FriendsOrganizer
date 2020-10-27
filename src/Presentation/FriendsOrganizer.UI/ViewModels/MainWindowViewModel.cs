@@ -17,7 +17,7 @@ namespace FriendsOrganizer.UI.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
 
-        public DelegateCommand CreateNewFriendCommmand { get; }
+        public DelegateCommand<Type> CreateNewDetailsCommmand { get; }
 
 
         public NavigationViewModel NavigationViewModel { get; }
@@ -39,7 +39,7 @@ namespace FriendsOrganizer.UI.ViewModels
             this._eventAggregator.GetEvent<AfterDeleteEvent>()
                 .Subscribe(AfterDeleteHandler);
 
-            CreateNewFriendCommmand = new DelegateCommand(OnCreateNewFriendExecute);
+            CreateNewDetailsCommmand = new DelegateCommand<Type>(OnCreateNewDetailsExecute);
         }
 
         private void AfterDeleteHandler(AfterDeleteEventArgs args)
@@ -72,14 +72,14 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private async void OnSelectedFriendEventHandler(OpenDetailEventArgs args)
         {
-            MessageUserIfFriendIsSelected();
+            MessageUserIfIsSelected();
 
             DetailViewModel = this._detailViewModelCreator[args.ViewModelName];           
 
             await this.DetailViewModel.LoadAsync(args.Id);
         }
 
-        private void MessageUserIfFriendIsSelected()
+        private void MessageUserIfIsSelected()
         {
             if (DetailViewModel != null && DetailViewModel.HasChange)
             {
@@ -92,11 +92,11 @@ namespace FriendsOrganizer.UI.ViewModels
             }
         }
 
-        private async void OnCreateNewFriendExecute()
+        private async void OnCreateNewDetailsExecute(Type viewModelType)
         {
-            MessageUserIfFriendIsSelected();
+            MessageUserIfIsSelected();
 
-            DetailViewModel = this._detailViewModelCreator[nameof(FriendDetailViewModel)];
+            DetailViewModel = this._detailViewModelCreator[viewModelType.Name];
 
             await this.DetailViewModel.LoadAddableAsync();
         }
