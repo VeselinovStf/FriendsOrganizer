@@ -12,6 +12,7 @@ namespace FriendsOrganizer.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private readonly Func<IMeetingDetailViewModel> _meetingDetailViewModelCreator;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
 
@@ -23,11 +24,13 @@ namespace FriendsOrganizer.UI.ViewModels
         public MainWindowViewModel(
             NavigationViewModel navigationViewModel,
             Func<IFriendDetailViewModel> friendDetailViewModelCreator,
+            Func<IMeetingDetailViewModel> meetingDetailViewModelCreator,
             IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService)
         {
             this.NavigationViewModel = navigationViewModel;
             this._detailViewModelCreator = friendDetailViewModelCreator;
+            this._meetingDetailViewModelCreator = meetingDetailViewModelCreator;
             this._eventAggregator = eventAggregator;
             this._messageDialogService = messageDialogService;
 
@@ -76,7 +79,12 @@ namespace FriendsOrganizer.UI.ViewModels
             {
                 case nameof(FriendDetailViewModel):
                     DetailViewModel = this._detailViewModelCreator();
-                    break;              
+                    break;
+                case nameof(MeetingDetailViewModel):
+                    DetailViewModel = this._meetingDetailViewModelCreator();
+                    break;
+                default:
+                    throw new Exception("Un recognized view");
             }
            
 

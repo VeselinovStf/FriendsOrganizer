@@ -21,21 +21,25 @@
         <Label Content="Title" Margin="10 10 10 0"/>
         <TextBox
             Grid.Row="1"
-            Text="{Binding Meeting.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            Text="{Binding Meeting.Title, Mode=TwoWay,
+            UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label 
             Grid.Row="2"
             Content="Start" Margin="10 0"/>
         <toolkid:DateTimePicker
             Grid.Row="3"
-            Text="{Binding Meeting.StartAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            Value="{Binding Meeting.StartAt, Mode=TwoWay,
+            UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label 
             Grid.Row="4"
             Content="Start" Margin="10 0"/>
         <toolkid:DateTimePicker
             Grid.Row="5"
-            Text="{Binding Meeting.EndAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            Value="{Binding Meeting.EndAt, Mode=TwoWay, 
+            UpdateSourceTrigger=PropertyChanged}"
+            />
 
         <StackPanel Grid.Row="7" Orientation="Horizontal">
             <Button Content="Save" Width="75" Margin="10" Command="{Binding SaveCommand}"/>
