@@ -55,7 +55,17 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private void OnRemoveFriendExecute()
         {
-            //TODO
+            var selectedFriendToRemove = SelectedAddedFried;
+
+            var friendToRemove = Meeting.Model.FriendMeetings
+                .FirstOrDefault(e => e.FriendId == selectedFriendToRemove.Id && e.MeetingId == Meeting.Id);
+
+            Meeting.Model.FriendMeetings.Remove(friendToRemove);
+
+            AddedFriends.Remove(selectedFriendToRemove);
+            AvailibleFriends.Add(selectedFriendToRemove);
+            HasChange = _meetingService.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
 
         private bool OnAddFriendCanExecute()
@@ -65,7 +75,16 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private void OnAddFriendExecute()
         {
-            //TODO
+            var friendToAdd = SelectedAvailibleFried;
+
+            Meeting.Model.FriendMeetings
+                .Add(new FriendMeeting() { FriendId = friendToAdd.Id, MeetingId = Meeting.Id });
+
+            AddedFriends.Add(friendToAdd);
+            AvailibleFriends.Remove(friendToAdd);
+            HasChange = _meetingService.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                
         }
 
         public MeetingModelWrapper Meeting
