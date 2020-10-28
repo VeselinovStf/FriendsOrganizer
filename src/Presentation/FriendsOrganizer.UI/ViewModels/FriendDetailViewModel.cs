@@ -19,7 +19,7 @@ namespace FriendsOrganizer.UI.ViewModels
     {
         private FriendModelWrapper _friend;
         private FriendPhoneModelWrapper _selectedPhoneNumber;
-        private readonly IFriendService _friendService;      
+        private readonly IFriendService _friendService;
         private readonly IMessageDialogService _messageDialogService;
         private readonly IProgrammingLanguagesService _programmingLanguagesService;
         public ObservableCollection<ProgrammingLanguageModelWrapper> ProgrammingLanguages { get; set; }
@@ -33,10 +33,10 @@ namespace FriendsOrganizer.UI.ViewModels
             : base(eventAggregator)
         {
             this._friendService = friendService;
-            
+
             this._messageDialogService = messageDialogService;
             this._programmingLanguagesService = programmingLanguagesService;
-          
+
             this.ProgrammingLanguages = new ObservableCollection<ProgrammingLanguageModelWrapper>();
             this.PhoneNumbers = new ObservableCollection<FriendPhoneModelWrapper>();
 
@@ -100,6 +100,13 @@ namespace FriendsOrganizer.UI.ViewModels
 
         protected override async void OnDeleteExecute()
         {
+            if (await this._friendService.HasMeetingAsync(Friend.Id))
+            {
+                this._messageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted, its participating in Meeting.");
+                return;
+
+            }
+
             var confirmDeleteMessage = this._messageDialogService
                .ShowOkCancelDialog("Are you really want to delete this friend?", "Delete friend");
 
@@ -109,14 +116,14 @@ namespace FriendsOrganizer.UI.ViewModels
 
                 RaiseDetailDeleteEvent(Friend.Model.Id);
             }
-           
+
         }
 
         protected override bool OnSaveCanExecute()
         {
-            return Friend!= null && 
+            return Friend != null &&
                 PhoneNumbers.All(p => !p.HasErrors) &&
-                !Friend.HasErrors && 
+                !Friend.HasErrors &&
                 HasChange;
         }
 
@@ -143,7 +150,7 @@ namespace FriendsOrganizer.UI.ViewModels
             InitializePhoneNumbers(Friend.PhoneNumbers);
 
             LoadProgrammyngLanguages();
-           
+
         }
 
         private void InitializePhoneNumbers(ICollection<FriendPhoneNumber> phoneNumbers)
@@ -160,7 +167,7 @@ namespace FriendsOrganizer.UI.ViewModels
                 var wrapper = new FriendPhoneModelWrapper(phoneNumber);
                 PhoneNumbers.Add(wrapper);
                 wrapper.PropertyChanged += FriendPhoneModelWrapper_PropertyChanged;
-                
+
             }
         }
 
@@ -181,7 +188,7 @@ namespace FriendsOrganizer.UI.ViewModels
         private async void LoadProgrammyngLanguages()
         {
             ProgrammingLanguages.Clear();
-          
+
             var languages = await this._programmingLanguagesService
                 .GetAllAsync();
 
@@ -223,7 +230,7 @@ namespace FriendsOrganizer.UI.ViewModels
 
             if (Friend.Id == 0)
             {
-                TriggerValidation(Friend);               
+                TriggerValidation(Friend);
             }
         }
 

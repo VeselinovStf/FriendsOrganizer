@@ -13,11 +13,15 @@ namespace FriendsOrganizer.Friends.Service
     {
         private readonly IGenericRepository<Friend, FriendsOrganizerDbContext> _friendRepository;
 
+        private readonly IFriendMeetingRepository _friendMeetingRepository;
+
         public FriendService(
-            IGenericRepository<Friend, FriendsOrganizerDbContext> friendRepository
+            IGenericRepository<Friend, FriendsOrganizerDbContext> friendRepository,
+            IFriendMeetingRepository friendMeetingRepository
             )
         {
             this._friendRepository = friendRepository;
+            this._friendMeetingRepository = friendMeetingRepository;
         }
 
         public async Task<Friend> AddNewAsync()
@@ -52,6 +56,11 @@ namespace FriendsOrganizer.Friends.Service
         public bool HasChanges()
         {
             return this._friendRepository.HasChanges();
+        }
+
+        public async Task<bool> HasMeetingAsync(int id)
+        {
+            return await this._friendMeetingRepository.GetByFriendIdAsync(id) != null;
         }
 
         public async Task RemoveAsync(Friend model)

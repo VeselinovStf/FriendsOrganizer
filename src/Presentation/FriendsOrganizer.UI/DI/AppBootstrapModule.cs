@@ -41,6 +41,7 @@ namespace FriendsOrganizer.UI.DI
 
             builder.RegisterType<FriendRepository>().As<IGenericRepository<Friend, FriendsOrganizerDbContext>>();
             builder.RegisterType<MeetingRepository>().As<IGenericRepository<Meeting, FriendsOrganizerDbContext>>();
+            builder.RegisterType<FriendMeetingRepository>().As<IFriendMeetingRepository>();
             builder.RegisterType<ProgrammingLanguageRepository>().As<IGenericRepository<ProgrammingLanguage, FriendsOrganizerDbContext>>();
         }
     }
