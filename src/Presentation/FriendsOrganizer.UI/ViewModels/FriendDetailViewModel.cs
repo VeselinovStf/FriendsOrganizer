@@ -6,6 +6,7 @@ using FriendsOrganizer.UI.UIServices;
 using FriendsOrganizer.UI.ViewModels.Abstraction;
 using Prism.Commands;
 using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -185,6 +186,12 @@ namespace FriendsOrganizer.UI.ViewModels
             {
                 ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
             }
+          
+        }
+
+        private void SetTitle()
+        {
+            Title = Friend.FirstName + " " + Friend.LastName;
         }
 
         private async void LoadProgrammyngLanguages()
@@ -214,9 +221,17 @@ namespace FriendsOrganizer.UI.ViewModels
                 {
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
-
+                if (e.PropertyName == nameof(Friend.FirstName) || e.PropertyName == nameof(Friend.LastName))
+                {
+                    SetTitle();
+                }
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            if (Friend.Id == 0)
+            {
+                Friend.FirstName = "";
+            }
+            SetTitle();
         }
 
         public override async Task LoadAddableAsync()

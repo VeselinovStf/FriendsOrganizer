@@ -224,7 +224,10 @@ namespace FriendsOrganizer.UI.ViewModels
                 {
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
-
+                if (e.PropertyName == nameof(Meeting.Title))
+                {
+                    SetTitle();
+                }
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
 
@@ -232,6 +235,13 @@ namespace FriendsOrganizer.UI.ViewModels
             {
                 Meeting.Title = "";
             }
+
+            SetTitle();
+        }
+
+        private void SetTitle()
+        {
+            Title = Meeting.Title;
         }
 
         protected override async void OnDeleteExecute()

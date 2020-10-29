@@ -11,6 +11,7 @@ namespace FriendsOrganizer.UI.ViewModels.Abstraction
     {
         private bool _hasChanges;
         private int _id;
+        private string _title;
         protected readonly IEventAggregator _eventAggregator;
 
         public DetailViewModelBase(IEventAggregator eventAggregator)
@@ -24,6 +25,19 @@ namespace FriendsOrganizer.UI.ViewModels.Abstraction
         public ICommand SaveCommand { get; }
 
         public ICommand DeleteCommand { get; }
+
+       
+
+        public string Title
+        {
+            get { return _title; }
+            set 
+            { 
+                _title = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public bool HasChange
         {
