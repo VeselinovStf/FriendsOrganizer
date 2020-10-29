@@ -10,5 +10,6 @@ namespace FriendsOrganizer.UI.ViewModels.Abstraction
 
 
         bool HasChange { get; set; }
+        int Id { get; }
     }
 }

@@ -133,7 +133,7 @@ namespace FriendsOrganizer.UI.ViewModels
                  .UpdateFriendAsync();
 
             HasChange = this._friendService.HasChanges();
-
+            Id = Friend.Id;
             RaiseDetailSaveEvent(Friend.Id, Friend.FirstName + " " + Friend.LastName);
 
         }
@@ -144,6 +144,8 @@ namespace FriendsOrganizer.UI.ViewModels
                 .GetAsync(friendId);
 
             Friend = new FriendModelWrapper(friendServiceCall);
+
+            Id = Friend.Id;
 
             CheckChangeHandler(Friend);
 

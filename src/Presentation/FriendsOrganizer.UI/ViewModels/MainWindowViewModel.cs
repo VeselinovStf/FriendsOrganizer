@@ -8,6 +8,8 @@ using Prism.Commands;
 using FriendsOrganizer.UI.ViewModels.Abstraction;
 using FriendsOrganizer.UI.Events.Arguments;
 using Autofac.Features.Indexed;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
@@ -39,26 +41,37 @@ namespace FriendsOrganizer.UI.ViewModels
             this._eventAggregator.GetEvent<AfterDeleteEvent>()
                 .Subscribe(AfterDeleteHandler);
 
+            this.DetailViewModels = new ObservableCollection<IDetailViewModel>();
+
             CreateNewDetailsCommmand = new DelegateCommand<Type>(OnCreateNewDetailsExecute);
         }
 
         private void AfterDeleteHandler(AfterDeleteEventArgs args)
         {
-            this.DetailViewModel = null;
-            
+            var detailsViewModel = DetailViewModels
+                   .SingleOrDefault(e => e.Id == args.Id &&
+                   e.GetType().Name == args.ViewModelName);
+
+            if (detailsViewModel != null)
+            {
+                DetailViewModels.Remove(detailsViewModel);
+            }
+
         }
 
-        private IDetailViewModel _detailViewModel;
+        public ObservableCollection<IDetailViewModel> DetailViewModels { get; }
 
-        public IDetailViewModel DetailViewModel
+        private IDetailViewModel _selectedDetailViewModel;
+
+        public IDetailViewModel SelectedDetailViewModel
         {
             get 
             { 
-                return _detailViewModel;
+                return _selectedDetailViewModel;
             }
-            private set 
+            set 
             {
-                _detailViewModel = value;
+                _selectedDetailViewModel = value;
                 OnPropertyChanged();
             }
         }
@@ -72,33 +85,27 @@ namespace FriendsOrganizer.UI.ViewModels
 
         private async void OnSelectedFriendEventHandler(OpenDetailEventArgs args)
         {
-            MessageUserIfIsSelected();
+            var detailsViewModel = DetailViewModels
+              .SingleOrDefault(e => e.Id == args.Id &&
+              e.GetType().Name == args.ViewModelName);
 
-            DetailViewModel = this._detailViewModelCreator[args.ViewModelName];           
-
-            await this.DetailViewModel.LoadAsync(args.Id);
-        }
-
-        private void MessageUserIfIsSelected()
-        {
-            if (DetailViewModel != null && DetailViewModel.HasChange)
+            if (detailsViewModel == null)
             {
-                var result = this._messageDialogService.ShowOkCancelDialog("Are you shore to change friend? Your changes will be lost!", "Question");
-
-                if (result == MessageDialogResult.Cancel)
-                {
-                    return;
-                }
+                detailsViewModel = this._detailViewModelCreator[args.ViewModelName];
+                await detailsViewModel.LoadAsync(args.Id);
+                DetailViewModels.Add(detailsViewModel);
             }
+
+            SelectedDetailViewModel = detailsViewModel;    
+
+          
         }
 
-        private async void OnCreateNewDetailsExecute(Type viewModelType)
+
+        private  void OnCreateNewDetailsExecute(Type viewModelType)
         {
-            MessageUserIfIsSelected();
-
-            DetailViewModel = this._detailViewModelCreator[viewModelType.Name];
-
-            await this.DetailViewModel.LoadAddableAsync();
+            OnSelectedFriendEventHandler(
+                new OpenDetailEventArgs { ViewModelName = viewModelType.Name});
         }
 
     }

@@ -204,7 +204,9 @@ namespace FriendsOrganizer.UI.ViewModels
             var meetingServiceCall = await this._meetingService
                .GetAsync(id);
 
+           
             InitializeMeeting(meetingServiceCall);
+            Id = Meeting.Id;
             await InitializePickList();
         }
 
@@ -254,6 +256,7 @@ namespace FriendsOrganizer.UI.ViewModels
         {
             await this._meetingService.SaveChangesAsync();
             HasChange = this._meetingService.HasChanges();
+            Id = Meeting.Id;
             RaiseDetailSaveEvent(Meeting.Id, Meeting.Title);
         }
     }
