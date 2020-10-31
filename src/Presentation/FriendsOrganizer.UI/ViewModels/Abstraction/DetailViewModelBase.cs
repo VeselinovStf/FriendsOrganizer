@@ -2,6 +2,7 @@
 using FriendsOrganizer.UI.Events.Arguments;
 using Prism.Commands;
 using Prism.Events;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -20,9 +21,21 @@ namespace FriendsOrganizer.UI.ViewModels.Abstraction
 
             this.SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             this.DeleteCommand = new DelegateCommand(OnDeleteExecute);
+            this.CloseCommand = new DelegateCommand(OnCloseExecute);
+        }
+
+        protected virtual void OnCloseExecute()
+        {
+            _eventAggregator.GetEvent<AfterDetailsCloseEvent>()
+                .Publish(new AfterDetailsCloseEventArgs()
+                {
+                    Id = this.Id,
+                    ViewModelName = this.GetType().Name
+                });
         }
 
         public ICommand SaveCommand { get; }
+        public ICommand CloseCommand { get; }
 
         public ICommand DeleteCommand { get; }
 

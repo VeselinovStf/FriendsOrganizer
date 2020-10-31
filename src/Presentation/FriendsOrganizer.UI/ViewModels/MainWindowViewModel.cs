@@ -41,22 +41,36 @@ namespace FriendsOrganizer.UI.ViewModels
             this._eventAggregator.GetEvent<AfterDeleteEvent>()
                 .Subscribe(AfterDeleteHandler);
 
+            this._eventAggregator.GetEvent<AfterDetailsCloseEvent>()
+                .Subscribe(AfterDetailCloseEventHandler);
+
             this.DetailViewModels = new ObservableCollection<IDetailViewModel>();
 
             CreateNewDetailsCommmand = new DelegateCommand<Type>(OnCreateNewDetailsExecute);
         }
 
+        private void AfterDetailCloseEventHandler(AfterDetailsCloseEventArgs args)
+        {
+            RemoveDetailMethod(args.Id, args.ViewModelName);
+        }
+
         private void AfterDeleteHandler(AfterDeleteEventArgs args)
         {
+            RemoveDetailMethod(args.Id, args.ViewModelName);
+
+        }
+
+  
+        private void RemoveDetailMethod(int id, string viewModelName)
+        {
             var detailsViewModel = DetailViewModels
-                   .SingleOrDefault(e => e.Id == args.Id &&
-                   e.GetType().Name == args.ViewModelName);
+                   .SingleOrDefault(e => e.Id == id &&
+                   e.GetType().Name == viewModelName);
 
             if (detailsViewModel != null)
             {
                 DetailViewModels.Remove(detailsViewModel);
             }
-
         }
 
         public ObservableCollection<IDetailViewModel> DetailViewModels { get; }

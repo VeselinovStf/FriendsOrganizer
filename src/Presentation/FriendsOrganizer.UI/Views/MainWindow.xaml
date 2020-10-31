@@ -61,6 +61,11 @@
                         <TextBlock Text="*"  
                                    Visibility="{Binding HasChanges, 
                             Converter={StaticResource booleanToVisabilityConverter}}" />
+                        <Button Command="{Binding CloseCommand}"
+                                VerticalContentAlignment="Top"
+                                Margin="2"
+                                Content="x"
+                                FontSize="20"/>
                     </StackPanel>
                 </DataTemplate>
             </TabControl.ItemTemplate>
