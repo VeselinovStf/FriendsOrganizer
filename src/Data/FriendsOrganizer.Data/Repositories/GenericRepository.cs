@@ -39,6 +39,17 @@ namespace FriendsOrganizer.Data.Repositories
             return this._dbContext.ChangeTracker.HasChanges();
         }
 
+        public async Task ReloadEntity(int id)
+        {
+            var entry = await this._dbContext.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
+
+            if (entry != null)
+            {
+                await this._dbContext.Entry<TEntity>(entry).ReloadAsync();
+
+            }
+        }
+
         public void Remove(TEntity model)
         {
             this._dbContext.Set<TEntity>().Remove(model);

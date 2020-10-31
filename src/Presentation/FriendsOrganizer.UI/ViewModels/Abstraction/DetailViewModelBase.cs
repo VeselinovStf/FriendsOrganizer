@@ -1,5 +1,6 @@
 ﻿using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.Events.Arguments;
+using FriendsOrganizer.UI.UIServices;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -14,11 +15,15 @@ namespace FriendsOrganizer.UI.ViewModels.Abstraction
         private int _id;
         private string _title;
         protected readonly IEventAggregator _eventAggregator;
+        protected readonly IMessageDialogService _messageDialogService;
 
-        public DetailViewModelBase(IEventAggregator eventAggregator)
+        public DetailViewModelBase(
+            IEventAggregator eventAggregator,
+            IMessageDialogService messageDialogService
+            )
         {
             this._eventAggregator = eventAggregator;
-
+            this._messageDialogService = messageDialogService;
             this.SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             this.DeleteCommand = new DelegateCommand(OnDeleteExecute);
             this.CloseCommand = new DelegateCommand(OnCloseExecute);
@@ -26,6 +31,17 @@ namespace FriendsOrganizer.UI.ViewModels.Abstraction
 
         protected virtual void OnCloseExecute()
         {
+            if (HasChange)
+            {
+                var result = this._messageDialogService
+                    .ShowOkCancelDialog("You've made changes. Close this item?", "Question");
+
+                if (result == MessageDialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+
             _eventAggregator.GetEvent<AfterDetailsCloseEvent>()
                 .Publish(new AfterDetailsCloseEventArgs()
                 {

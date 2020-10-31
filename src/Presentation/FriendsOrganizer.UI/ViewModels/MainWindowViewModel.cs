@@ -10,6 +10,7 @@ using FriendsOrganizer.UI.Events.Arguments;
 using Autofac.Features.Indexed;
 using System.Collections.ObjectModel;
 using System.Linq;
+using FriendsOrganizer.UI.ModelsWrappers;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
@@ -35,6 +36,8 @@ namespace FriendsOrganizer.UI.ViewModels
             this._eventAggregator = eventAggregator;
             this._messageDialogService = messageDialogService;
 
+          
+
             this._eventAggregator.GetEvent<OpenDetailsEvent>()
                .Subscribe(OnSelectedFriendEventHandler);
 
@@ -48,6 +51,8 @@ namespace FriendsOrganizer.UI.ViewModels
 
             CreateNewDetailsCommmand = new DelegateCommand<Type>(OnCreateNewDetailsExecute);
         }
+
+     
 
         private void AfterDetailCloseEventHandler(AfterDetailsCloseEventArgs args)
         {
@@ -106,7 +111,17 @@ namespace FriendsOrganizer.UI.ViewModels
             if (detailsViewModel == null)
             {
                 detailsViewModel = this._detailViewModelCreator[args.ViewModelName];
-                await detailsViewModel.LoadAsync(args.Id);
+
+                if (args.Id == 0)
+                {
+                    await detailsViewModel.LoadAddableAsync();
+                }
+                else
+                {
+                    await detailsViewModel.LoadAsync(args.Id);
+                    
+                }
+
                 DetailViewModels.Add(detailsViewModel);
             }
 

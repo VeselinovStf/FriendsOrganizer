@@ -63,6 +63,13 @@ namespace FriendsOrganizer.Friends.Service
             return await this._friendMeetingRepository.GetByFriendIdAsync(id) != null;
         }
 
+        public async Task ReloadFriend(int id)
+        {
+           await this._friendRepository
+                .ReloadEntity(id);
+        
+        }
+
         public async Task RemoveAsync(Friend model)
         {
             this._friendRepository.Remove(model);

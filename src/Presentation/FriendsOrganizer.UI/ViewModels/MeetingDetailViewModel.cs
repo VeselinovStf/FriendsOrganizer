@@ -1,6 +1,8 @@
 ﻿using FriendOrganizer.Meetings.Service.Abstraction;
 using FriendsOrganizer.Data.Models;
 using FriendsOrganizer.Friends.Service.Abstraction;
+using FriendsOrganizer.UI.Events;
+using FriendsOrganizer.UI.Events.Arguments;
 using FriendsOrganizer.UI.Models;
 using FriendsOrganizer.UI.ModelsWrappers;
 using FriendsOrganizer.UI.UIServices;
@@ -20,7 +22,6 @@ namespace FriendsOrganizer.UI.ViewModels
     {
         private readonly IMeetingService _meetingService;
         private readonly IFriendService _friendService;
-        private readonly IMessageDialogService _messageDialogService;
         private FriendModel _selectedAddedFried;
         private FriendModel _selectedAvailibleFried;
         private MeetingModelWrapper _meeting;
@@ -36,16 +37,45 @@ namespace FriendsOrganizer.UI.ViewModels
             IMeetingService meetingService,
             IFriendService friendService,
             IEventAggregator eventAggregator,
-            IMessageDialogService messageDialogService) : base(eventAggregator)
+            IMessageDialogService messageDialogService) : base(eventAggregator,messageDialogService)
         {
             this._meetingService = meetingService;
             this._friendService = friendService;
-            this._messageDialogService = messageDialogService;
+
             this.AddedFriends = new ObservableCollection<FriendModel>();
             this.AvailibleFriends = new ObservableCollection<FriendModel>();
 
             this.AddFriendCommand = new DelegateCommand(OnAddFriendExecute, OnAddFriendCanExecute);
             this.RemoveFriendCommand = new DelegateCommand(OnRemoveFriendExecute, OnRemoveFriendCanExecute);
+
+            this._eventAggregator.GetEvent<AfterSaveDetailsEvent>()
+              .Subscribe(AfterDetailsSaveEventHandler);
+
+            this._eventAggregator.GetEvent<AfterDeleteEvent>()
+              .Subscribe(AfterDetailsDeleteEventHandler);
+        }
+
+        private async void AfterDetailsDeleteEventHandler(AfterDeleteEventArgs args)
+        {
+            if (args.ViewModelName == nameof(FriendDetailViewModel))
+            {
+                _allFriends = await this._friendService
+                    .GetAllAsync();
+
+                SetupPickList();
+            }
+        }
+
+        private async void AfterDetailsSaveEventHandler(AfterSaveDetailsEventArgs args)
+        {
+            if (args.ViewModelName == nameof(FriendDetailViewModel))
+            {
+                await this._friendService
+                    .ReloadFriend(args.Id);
+
+                await InitializePickList();
+                SetupPickList();
+            }
         }
 
         private bool OnRemoveFriendCanExecute()

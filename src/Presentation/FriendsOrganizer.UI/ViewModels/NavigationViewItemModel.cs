@@ -11,7 +11,7 @@ namespace FriendsOrganizer.UI.ViewModels
     {
         private string _displayProperty;
         private readonly IEventAggregator _eventAggregator;
-        private readonly string _viewModelName;
+        public string _viewModelName { get; set; }
         private int _id;
 
         public NavigationViewItemModel(int id, string displayProperty,

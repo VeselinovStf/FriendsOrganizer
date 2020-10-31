@@ -15,5 +15,6 @@ namespace FriendsOrganizer.Friends.Service.Abstraction
         Task<Friend> AddNewAsync();
         Task RemoveAsync(Friend model);
         Task<bool> HasMeetingAsync(int id);
+        Task ReloadFriend(int id);
     }
 }
