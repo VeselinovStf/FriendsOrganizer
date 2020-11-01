@@ -46,7 +46,7 @@ namespace FriendsOrganizer.UI.ViewModels
 
             if (isReferenced)
             {
-                this._messageDialogService.ShowInfoDialog("This language is referencet by at least one friend, can't be removed");
+                await this._messageDialogService.ShowInfoDialogAsync("This language is referencet by at least one friend, can't be removed");
 
                 return;
             }

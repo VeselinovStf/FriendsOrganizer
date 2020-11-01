@@ -130,7 +130,7 @@ namespace FriendsOrganizer.UI.ViewModels
                 catch
                 {
                     //Db Concurrency
-                    this._messageDialogService.ShowInfoDialog("Could not load the entry, Maybe is was deleted in the mentime by another user");
+                    await this._messageDialogService.ShowInfoDialogAsync("Could not load the entry, Maybe is was deleted in the mentime by another user");
                     await NavigationViewModel.LoadAsync();
                     return;
                 }

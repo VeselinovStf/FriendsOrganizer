@@ -31,12 +31,12 @@ namespace FriendsOrganizer.UI.ViewModels.Abstraction
             this.CloseCommand = new DelegateCommand(OnCloseExecute);
         }
 
-        protected virtual void OnCloseExecute()
+        protected virtual async void OnCloseExecute()
         {
             if (HasChange)
             {
-                var result = this._messageDialogService
-                    .ShowOkCancelDialog("You've made changes. Close this item?", "Question");
+                var result = await this._messageDialogService
+                    .ShowOkCancelDialogAsync("You've made changes. Close this item?", "Question");
 
                 if (result == MessageDialogResult.Cancel)
                 {
@@ -111,14 +111,14 @@ namespace FriendsOrganizer.UI.ViewModels.Abstraction
 
                 if (dbValue == null)
                 {
-                    this._messageDialogService.ShowInfoDialog("Thi item is deleted by another user");
+                    await this._messageDialogService.ShowInfoDialogAsync("Thi item is deleted by another user");
                     RaiseDetailDeleteEvent(Id);
                     return;
                 }
 
 
-                var result = this._messageDialogService
-                    .ShowOkCancelDialog("The entity is been changed. Click Ok to save your changes anyway", "Edited by other user");
+                var result = await this._messageDialogService
+                    .ShowOkCancelDialogAsync("The entity is been changed. Click Ok to save your changes anyway", "Edited by other user");
 
                 if (result == MessageDialogResult.Ok)
                 {

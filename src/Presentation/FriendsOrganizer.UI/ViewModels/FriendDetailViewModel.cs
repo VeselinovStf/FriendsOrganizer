@@ -113,13 +113,13 @@ namespace FriendsOrganizer.UI.ViewModels
         {
             if (await this._friendService.HasMeetingAsync(Friend.Id))
             {
-                base._messageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted, its participating in Meeting.");
+                await base._messageDialogService.ShowInfoDialogAsync($"{Friend.FirstName} {Friend.LastName} can't be deleted, its participating in Meeting.");
                 return;
 
             }
 
-            var confirmDeleteMessage = base._messageDialogService
-               .ShowOkCancelDialog("Are you really want to delete this friend?", "Delete friend");
+            var confirmDeleteMessage = await base._messageDialogService
+               .ShowOkCancelDialogAsync("Are you really want to delete this friend?", "Delete friend");
 
             if (confirmDeleteMessage == MessageDialogResult.Ok)
             {
