@@ -87,6 +87,7 @@ namespace FriendsOrganizer.UI.ViewModels
         {
             await this._programmingLanguagesService.SaveAsync();
             HasChange = this._programmingLanguagesService.HasChanges();
+            RaiseCollectionSaveEvent();
         }
     }
 }

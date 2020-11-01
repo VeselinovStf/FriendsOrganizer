@@ -115,6 +115,15 @@ namespace FriendsOrganizer.UI.ViewModels.Abstraction
                 });
         }
 
+        protected virtual void RaiseCollectionSaveEvent()
+        {
+            this._eventAggregator.GetEvent<AfterCollectionSaveEvent>().Publish(
+                new AfterCollectionSaveEventArgs()
+                {
+                    ViewModelName = this.GetType().Name
+                });
+        }
+
         protected virtual void RaiseDetailSaveEvent(int modelId, string displayProperty)
         {
             this._eventAggregator.GetEvent<AfterSaveDetailsEvent>().Publish(

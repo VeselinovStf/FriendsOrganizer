@@ -1,6 +1,8 @@
 ﻿using FriendsOrganizer.Data.Models;
 using FriendsOrganizer.Friends.Service.Abstraction;
 using FriendsOrganizer.ProgrammingLanguages.Service.Abstraction;
+using FriendsOrganizer.UI.Events;
+using FriendsOrganizer.UI.Events.Arguments;
 using FriendsOrganizer.UI.ModelsWrappers;
 using FriendsOrganizer.UI.UIServices;
 using FriendsOrganizer.UI.ViewModels.Abstraction;
@@ -35,6 +37,9 @@ namespace FriendsOrganizer.UI.ViewModels
             this._friendService = friendService;
             this._programmingLanguagesService = programmingLanguagesService;
 
+            this._eventAggregator.GetEvent<AfterCollectionSaveEvent>()
+                .Subscribe(AfterCollectionSaved);
+
             this.ProgrammingLanguages = new ObservableCollection<ProgrammingLanguageModelWrapper>();
             this.PhoneNumbers = new ObservableCollection<FriendPhoneModelWrapper>();
 
@@ -42,6 +47,13 @@ namespace FriendsOrganizer.UI.ViewModels
             this.DeletePhoneNumberCommand = new DelegateCommand(OnDeletePhoneNumberExecute, OnDeletePhoneNumberCanExecute);
         }
 
+        private  void AfterCollectionSaved(AfterCollectionSaveEventArgs args)
+        {
+            if (args.ViewModelName == nameof(ProgrammingLanguageDetailsViewModel))
+            {
+                 LoadProgrammyngLanguages();
+            }
+        }
 
         public FriendPhoneModelWrapper SelectedPhoneNumber
         {
