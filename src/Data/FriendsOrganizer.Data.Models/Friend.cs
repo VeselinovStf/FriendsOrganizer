@@ -31,6 +31,9 @@ namespace FriendsOrganizer.Data.Models
         public ICollection<FriendPhoneNumber> PhoneNumbers { get; set; }
         public ICollection<FriendMeeting> FriendMeetings { get; set; }
 
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
+
         public string FullName()
         {
             return this.FirstName + " " + this.LastName;

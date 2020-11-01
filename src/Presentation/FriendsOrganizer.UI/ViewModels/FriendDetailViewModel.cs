@@ -6,6 +6,7 @@ using FriendsOrganizer.UI.Events.Arguments;
 using FriendsOrganizer.UI.ModelsWrappers;
 using FriendsOrganizer.UI.UIServices;
 using FriendsOrganizer.UI.ViewModels.Abstraction;
+using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -139,12 +140,15 @@ namespace FriendsOrganizer.UI.ViewModels
 
         protected override async void OnSaveExecute()
         {
-            await this._friendService
-                 .UpdateFriendAsync();
-
-            HasChange = this._friendService.HasChanges();
-            Id = Friend.Id;
-            RaiseDetailSaveEvent(Friend.Id, Friend.FirstName + " " + Friend.LastName);
+            await OnSaveExecuteWithOptimisticConcurrency(
+                async () => await _friendService
+                    .UpdateFriendAsync(),
+                () =>
+                 {
+                     HasChange = this._friendService.HasChanges();
+                     Id = Friend.Id;
+                     RaiseDetailSaveEvent(Friend.Id, Friend.FirstName + " " + Friend.LastName);
+                 });
 
         }
 

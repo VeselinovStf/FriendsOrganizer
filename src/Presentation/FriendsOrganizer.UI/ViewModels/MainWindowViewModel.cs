@@ -112,17 +112,29 @@ namespace FriendsOrganizer.UI.ViewModels
             {
                 detailsViewModel = this._detailViewModelCreator[args.ViewModelName];
 
-                if (args.Id == 0)
+                
+                try
                 {
-                    await detailsViewModel.LoadAddableAsync();
-                }
-                else
-                {
-                    await detailsViewModel.LoadAsync(args.Id);
-                    
-                }
+                    if (args.Id == 0)
+                    {
+                        await detailsViewModel.LoadAddableAsync();
+                    }
+                    else
+                    {
+                        await detailsViewModel.LoadAsync(args.Id);
 
-                DetailViewModels.Add(detailsViewModel);
+                    }
+
+                    DetailViewModels.Add(detailsViewModel);
+                }
+                catch
+                {
+                    //Db Concurrency
+                    this._messageDialogService.ShowInfoDialog("Could not load the entry, Maybe is was deleted in the mentime by another user");
+                    await NavigationViewModel.LoadAsync();
+                    return;
+                }
+               
             }
 
             SelectedDetailViewModel = detailsViewModel;    

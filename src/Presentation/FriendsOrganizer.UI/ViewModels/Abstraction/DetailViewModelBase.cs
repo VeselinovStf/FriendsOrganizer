@@ -1,9 +1,11 @@
 ﻿using FriendsOrganizer.UI.Events;
 using FriendsOrganizer.UI.Events.Arguments;
 using FriendsOrganizer.UI.UIServices;
+using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Events;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -95,6 +97,49 @@ namespace FriendsOrganizer.UI.ViewModels.Abstraction
             }
         }
 
+        protected async Task OnSaveExecuteWithOptimisticConcurrency(
+            Func<Task> saveFunc,
+            Action afterSaveAction)
+        {
+            try
+            {
+                await saveFunc();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                var dbValue = ex.Entries.Single().GetDatabaseValues();
+
+                if (dbValue == null)
+                {
+                    this._messageDialogService.ShowInfoDialog("Thi item is deleted by another user");
+                    RaiseDetailDeleteEvent(Id);
+                    return;
+                }
+
+
+                var result = this._messageDialogService
+                    .ShowOkCancelDialog("The entity is been changed. Click Ok to save your changes anyway", "Edited by other user");
+
+                if (result == MessageDialogResult.Ok)
+                {
+                    //Client wins
+                    var entry = ex.Entries.Single();
+                    entry.OriginalValues.SetValues(await entry.GetDatabaseValuesAsync());
+
+                    await saveFunc();
+                }
+                else
+                {
+                    //Db wins
+                    await ex.Entries.Single().ReloadAsync();
+                    await LoadAsync(Id);
+                }
+
+            }
+
+            afterSaveAction();
+
+        }
         protected abstract void OnDeleteExecute();
 
         protected abstract bool OnSaveCanExecute();
