@@ -24,6 +24,6 @@ In this course, Building an Enterprise App with WPF, MVVM, and Entity Framework 
 - Use Autofac for Dependancy Injection
 - Use Mahapps.Metro for styling
 
-## Staus
+## Status
 
 - Completed
