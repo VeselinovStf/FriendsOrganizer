@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FriendsOrganizer.UI.ViewModels
 {
-    public class ProgrammingLanguageDetailsViewModel : DetailViewModelBase
+    public class ProgrammingLanguageDetailsViewModel : DetailViewModelBase, IProgrammingLanguageViewModel
     {
         private readonly IProgrammingLanguagesService _programmingLanguagesService;
 
@@ -29,9 +29,9 @@ namespace FriendsOrganizer.UI.ViewModels
 
         public ObservableCollection<ProgrammingLanguageModelWrapper> ProgrammingLanguages { get; }
 
-        public override Task LoadAddableAsync()
+        public override async Task LoadAddableAsync()
         {
-            return Task.Delay(0);
+            await LoadAsync(Id);
         }
 
         public override async Task LoadAsync(int id)

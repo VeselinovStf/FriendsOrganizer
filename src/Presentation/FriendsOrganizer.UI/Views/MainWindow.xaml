@@ -49,7 +49,7 @@
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem  Header="Programming Languages"
-                    Command="{Binding EditProgrammingLanguagesCommmand}"
+                    Command="{Binding CreateNewDetailsCommmand}"
                     CommandParameter="{x:Type viewModels:ProgrammingLanguageDetailsViewModel}"/>
             </MenuItem>
         </Menu>
