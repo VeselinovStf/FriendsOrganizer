@@ -9,5 +9,8 @@ namespace FriendsOrganizer.ProgrammingLanguages.Service.Abstraction
         Task<IEnumerable<ProgrammingLanguage>> GetAllAsync();
         bool HasChanges();
         Task SaveAsync();
+        void Remove(ProgrammingLanguage model);
+        Task AddAsync(ProgrammingLanguage model);
+        Task<bool> IsReferencedAsync(int id);
     }
 }

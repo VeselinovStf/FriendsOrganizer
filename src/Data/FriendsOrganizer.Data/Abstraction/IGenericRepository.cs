@@ -15,5 +15,6 @@ namespace FriendsOrganizer.Data.Abstraction
         Task AddAsync(TEntity newFriend);
         void Remove(TEntity model);
         Task ReloadEntity(int id);
+
     }
 }
