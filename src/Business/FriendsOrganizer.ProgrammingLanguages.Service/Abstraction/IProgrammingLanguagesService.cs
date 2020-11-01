@@ -7,5 +7,7 @@ namespace FriendsOrganizer.ProgrammingLanguages.Service.Abstraction
     public interface IProgrammingLanguagesService
     {
         Task<IEnumerable<ProgrammingLanguage>> GetAllAsync();
+        bool HasChanges();
+        Task SaveAsync();
     }
 }

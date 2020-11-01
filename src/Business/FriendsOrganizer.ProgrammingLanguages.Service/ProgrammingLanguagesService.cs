@@ -20,5 +20,15 @@ namespace FriendsOrganizer.ProgrammingLanguages.Service
             return await this._programmingLanguageRepository
                 .GetAllAsync();
         }
+
+        public bool HasChanges()
+        {
+            return this._programmingLanguageRepository.HasChanges();
+        }
+
+        public async Task SaveAsync()
+        {
+            await this._programmingLanguageRepository.SaveChangesAsync();
+        }
     }
 }
