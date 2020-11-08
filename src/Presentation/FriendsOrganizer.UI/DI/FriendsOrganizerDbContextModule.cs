@@ -12,7 +12,7 @@ namespace FriendsOrganizer.UI.DI
             public FriendsOrganizerDbContext CreateDbContext(string[] args)
             {
                 var optionsBuilder = new DbContextOptionsBuilder<FriendsOrganizerDbContext>();
-                optionsBuilder.UseSqlServer("Server=DESKTOP-UGHAA7O;Database=FriendsDb;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=DESKTOP-QK2ADMV;Database=FriendsDb;Trusted_Connection=True;User Id=DESKTOP-QK2ADMV\chofe;Password=;");
 
                 return new FriendsOrganizerDbContext(optionsBuilder.Options);
             }       
@@ -24,7 +24,7 @@ namespace FriendsOrganizer.UI.DI
             builder.Register(c =>
             {
                 var opt = new DbContextOptionsBuilder<FriendsOrganizerDbContext>();
-                opt.UseSqlServer("Server=DESKTOP-UGHAA7O;Database=FriendsDb;Trusted_Connection=True;");
+                opt.UseSqlServer(@"Server=DESKTOP-QK2ADMV;Database=FriendsDb;Trusted_Connection=True;User Id=DESKTOP-QK2ADMV\chofe;Password=;");
 
                 return new FriendsOrganizerDbContext(opt.Options);
             }).AsImplementedInterfaces()

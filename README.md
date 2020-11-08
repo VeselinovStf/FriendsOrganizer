@@ -1,6 +1,8 @@
 # FriendsOrganizer
 Project for - "Building an Enterprise App with WPF, MVVM, and EF Code Firs" Pluralsight Course
 
+![project image](https://github.com/VeselinovStf/FriendsOrganizer/repoImg/demoFO.bmp)
+
 - Description
 At the core of developing a data-driven WPF application is a thorough knowledge of how to use the MVVM Pattern and Entity Framework.
 
